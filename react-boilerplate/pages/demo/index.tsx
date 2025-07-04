@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
+import DemoPage from "@/templates/Demo/DemoPage";
 
 const Demo: NextPage = () => {
-    return <div>Hello World</div>;
+    return <DemoPage />;
 };
 
 export default Demo;
