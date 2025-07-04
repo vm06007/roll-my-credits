@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepStego - Neural Steganography</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex-grow: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 1rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #888;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .panel {
+            background: #1a1a1a;
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid #333;
+        }
+
+        .panel h2 {
+            margin-bottom: 1.5rem;
+            color: #00ccff;
+        }
+
+        .upload-area {
+            border: 2px dashed #444;
+            padding: 3rem;
+            text-align: center;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: #00ccff;
+            background: rgba(0, 204, 255, 0.05);
+        }
+
+        .upload-area.dragover {
+            border-color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #aaa;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 0.5rem;
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #00ccff;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            border: none;
+            border-radius: 0.5rem;
+            color: #000;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 204, 255, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .result-area {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #0a0a0a;
+            border-radius: 0.5rem;
+            border: 1px solid #333;
+        }
+
+        .result-area h3 {
+            margin-bottom: 1rem;
+            color: #00ff88;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #333;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #333;
+            border-radius: 50%;
+            border-top-color: #00ccff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error {
+            color: #ff4444;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .success {
+            color: #00ff88;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>DeepStego</h1>
+            <p class="subtitle">Neural Network-Based Steganography for Secure Message Hiding</p>
+        </header>
+
+        <div class="main-content">
+            <div class="panel">
+                <h2>Encode Message</h2>
+
+                <div class="upload-area" id="encodeUploadArea">
+                    <p>Drop image here or click to upload</p>
+                    <input type="file" id="encodeImageInput" accept="image/*">
+                </div>
+
+                <div class="form-group">
+                    <label for="seedPhrase">Seed Phrase (12 words)</label>
+                    <textarea id="seedPhrase" rows="3" placeholder="Enter your 12-word seed phrase...">my secret text message hidden inside this image</textarea>
+                </div>
+
+                <button class="btn" id="encodeBtn">Encode Message</button>
+
+                <div class="loading" id="encodeLoading">
+                    <div class="spinner"></div>
+                    <p>Encoding message...</p>
+                </div>
+
+                <div class="result-area" id="encodeResult" style="display: none;">
+                    <h3>Encoded Image</h3>
+                    <p class="success">Message successfully hidden!</p>
+                    <img id="encodedImage" class="image-preview" alt="Encoded image">
+                    <button class="btn" id="downloadBtn" style="margin-top: 1rem;">Download Image</button>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2>Decode Message</h2>
+
+                <div class="upload-area" id="decodeUploadArea">
+                    <p>Drop encoded image here or click to upload</p>
+                    <input type="file" id="decodeImageInput" accept="image/*">
+                </div>
+
+                <button class="btn" id="decodeBtn">Decode Message</button>
+
+                <div class="loading" id="decodeLoading">
+                    <div class="spinner"></div>
+                    <p>Decoding message...</p>
+                </div>
+
+                <div class="result-area" id="decodeResult" style="display: none;">
+                    <h3>Recovered Message</h3>
+                    <div class="form-group">
+                        <label>Extracted Seed Phrase:</label>
+                        <textarea id="recoveredPhrase" rows="3" readonly></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+
+        // Encode functionality
+        const encodeUploadArea = document.getElementById('encodeUploadArea');
+        const encodeImageInput = document.getElementById('encodeImageInput');
+        const encodeBtn = document.getElementById('encodeBtn');
+        const encodeLoading = document.getElementById('encodeLoading');
+        const encodeResult = document.getElementById('encodeResult');
+        const encodedImage = document.getElementById('encodedImage');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const seedPhrase = document.getElementById('seedPhrase');
+
+        // Decode functionality
+        const decodeUploadArea = document.getElementById('decodeUploadArea');
+        const decodeImageInput = document.getElementById('decodeImageInput');
+        const decodeBtn = document.getElementById('decodeBtn');
+        const decodeLoading = document.getElementById('decodeLoading');
+        const decodeResult = document.getElementById('decodeResult');
+        const recoveredPhrase = document.getElementById('recoveredPhrase');
+
+        let selectedEncodeFile = null;
+        let selectedDecodeFile = null;
+        let encodedImageData = null;
+
+        // Upload area handlers
+        function setupUploadArea(area, input, onFileSelect) {
+            area.addEventListener('click', () => input.click());
+
+            area.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                area.classList.add('dragover');
+            });
+
+            area.addEventListener('dragleave', () => {
+                area.classList.remove('dragover');
+            });
+
+            area.addEventListener('drop', (e) => {
+                e.preventDefault();
+                area.classList.remove('dragover');
+
+                const file = e.dataTransfer.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    onFileSelect(file);
+                }
+            });
+
+            input.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    onFileSelect(file);
+                }
+            });
+        }
+
+        setupUploadArea(encodeUploadArea, encodeImageInput, (file) => {
+            selectedEncodeFile = file;
+            encodeUploadArea.innerHTML = `<p>Selected: ${file.name}</p>`;
+        });
+
+        setupUploadArea(decodeUploadArea, decodeImageInput, (file) => {
+            selectedDecodeFile = file;
+            decodeUploadArea.innerHTML = `<p>Selected: ${file.name}</p>`;
+        });
+
+        // Encode button handler
+        encodeBtn.addEventListener('click', async () => {
+            if (!selectedEncodeFile) {
+                alert('Please select an image first');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('image', selectedEncodeFile);
+            formData.append('seed_phrase', seedPhrase.value);
+
+            encodeBtn.disabled = true;
+            encodeLoading.classList.add('active');
+            encodeResult.style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_BASE}/encode`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    encodedImageData = data.encoded_image;
+                    encodedImage.src = `data:image/png;base64,${encodedImageData}`;
+                    encodeResult.style.display = 'block';
+                } else {
+                    alert('Encoding failed');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                encodeBtn.disabled = false;
+                encodeLoading.classList.remove('active');
+            }
+        });
+
+        // Download button handler
+        downloadBtn.addEventListener('click', () => {
+            if (encodedImageData) {
+                const link = document.createElement('a');
+                link.href = `data:image/png;base64,${encodedImageData}`;
+                link.download = 'stego_image.png';
+                link.click();
+            }
+        });
+
+        // Decode button handler
+        decodeBtn.addEventListener('click', async () => {
+            if (!selectedDecodeFile) {
+                alert('Please select an encoded image first');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('image', selectedDecodeFile);
+
+            decodeBtn.disabled = true;
+            decodeLoading.classList.add('active');
+            decodeResult.style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_BASE}/decode`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    recoveredPhrase.value = data.recovered_phrase;
+                    decodeResult.style.display = 'block';
+                } else {
+                    alert('Decoding failed');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                decodeBtn.disabled = false;
+                decodeLoading.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
