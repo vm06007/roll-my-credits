@@ -18,37 +18,37 @@ function App() {
       </header>
 
       <div className="tabs">
-        <button 
+        <button
           className={`tab ${activeTab === 'encode' ? 'active' : ''}`}
           onClick={() => setActiveTab('encode')}
         >
           Encode Image
         </button>
-        <button 
+        <button
           className={`tab ${activeTab === 'decode' ? 'active' : ''}`}
           onClick={() => setActiveTab('decode')}
         >
           Decode Image
         </button>
-        <button 
+        <button
           className={`tab ${activeTab === 'video-encode' ? 'active' : ''}`}
           onClick={() => setActiveTab('video-encode')}
         >
           Encode Video
         </button>
-        <button 
+        <button
           className={`tab ${activeTab === 'video-decode' ? 'active' : ''}`}
           onClick={() => setActiveTab('video-decode')}
         >
           Decode Video
         </button>
-        <button 
+        <button
           className={`tab ${activeTab === 'seedphrase-encode' ? 'active' : ''}`}
           onClick={() => setActiveTab('seedphrase-encode')}
         >
           🔐 Hide Seed Phrase
         </button>
-        <button 
+        <button
           className={`tab ${activeTab === 'seedphrase-decode' ? 'active' : ''}`}
           onClick={() => setActiveTab('seedphrase-decode')}
         >

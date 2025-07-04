@@ -52,13 +52,13 @@ function VideoDecodeSection() {
       clearInterval(progressInterval);
       setDecodedMessage(response.data.message);
       setProgress('✅ Video decoded successfully!');
-      
+
       // Clear success message after 3 seconds
       setTimeout(() => setProgress(''), 3000);
-      
+
     } catch (err) {
       clearInterval(progressInterval);
-      
+
       if (err.code === 'ECONNABORTED') {
         setError('Decoding timed out. This video may be too long or complex. Try with a shorter video.');
       } else {

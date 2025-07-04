@@ -101,9 +101,9 @@ function EncodeSection() {
       {encodedImageUrl && (
         <div className="result-section">
           <h3>Encoded Image:</h3>
-          <img 
-            src={encodedImageUrl} 
-            alt="Encoded" 
+          <img
+            src={encodedImageUrl}
+            alt="Encoded"
             className="result-image"
           />
           <button onClick={handleDownload} className="secondary-button">

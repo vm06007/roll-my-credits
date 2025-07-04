@@ -15,7 +15,7 @@ const SeedPhraseEncodeSection = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!seedPhrase.trim()) {
       setError('Please enter a seed phrase');
       return;
@@ -113,7 +113,7 @@ const SeedPhraseEncodeSection = () => {
     <div className="section">
       <h2>🔐 Hide Seed Phrase in Video</h2>
       <p>Hide your 12 or 24-word seed phrase securely inside a cover video using steganography.</p>
-      
+
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="seedPhrase">
@@ -146,8 +146,8 @@ const SeedPhraseEncodeSection = () => {
           <small>Supported formats: MP4, AVI, MKV, MOV</small>
         </div>
 
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           disabled={isLoading || wordCount === 0 || (wordCount !== 12 && wordCount !== 24) || !coverVideo}
           className="submit-btn"
         >
@@ -159,8 +159,8 @@ const SeedPhraseEncodeSection = () => {
         <div className="progress-section">
           <h3>📊 Progress</h3>
           <div className="progress-bar">
-            <div 
-              className="progress-fill" 
+            <div
+              className="progress-fill"
               style={{ width: `${Math.max(0, progress)}%` }}
             ></div>
           </div>
@@ -201,7 +201,7 @@ const SeedPhraseEncodeSection = () => {
           <li>The seed phrase video is hidden inside your cover video using LSB steganography</li>
           <li>The result looks like a normal video but contains your hidden seed phrase</li>
         </ul>
-        
+
         <div className="warning">
           <h4>⚠️ Security Notes</h4>
           <ul>

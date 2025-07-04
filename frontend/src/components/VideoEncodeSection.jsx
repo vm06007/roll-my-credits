@@ -108,8 +108,8 @@ function VideoEncodeSection() {
       {encodedVideoUrl && (
         <div className="result-section">
           <h3>Encoded Video:</h3>
-          <video 
-            controls 
+          <video
+            controls
             className="result-video"
             src={encodedVideoUrl}
           >

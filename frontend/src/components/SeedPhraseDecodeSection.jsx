@@ -13,7 +13,7 @@ const SeedPhraseDecodeSection = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!encryptedVideo) {
       setError('Please select an encrypted video file');
       return;
@@ -123,7 +123,7 @@ const SeedPhraseDecodeSection = () => {
     <div className="section">
       <h2>🔓 Extract Seed Phrase from Video</h2>
       <p>Extract a hidden seed phrase from an encrypted video file.</p>
-      
+
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="encryptedVideo">
@@ -139,8 +139,8 @@ const SeedPhraseDecodeSection = () => {
           <small>Upload the video file containing the hidden seed phrase</small>
         </div>
 
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           disabled={isLoading || !encryptedVideo}
           className="submit-btn"
         >
@@ -152,8 +152,8 @@ const SeedPhraseDecodeSection = () => {
         <div className="progress-section">
           <h3>📊 Progress</h3>
           <div className="progress-bar">
-            <div 
-              className="progress-fill" 
+            <div
+              className="progress-fill"
               style={{ width: `${Math.max(0, progress)}%` }}
             ></div>
           </div>
@@ -167,7 +167,7 @@ const SeedPhraseDecodeSection = () => {
         <div className="result-section success">
           <h3>✅ Success!</h3>
           <p>{result.message}</p>
-          
+
           {extractedSeedPhrase ? (
             <div className="seed-phrase-display">
               <h4>🔑 Extracted Seed Phrase:</h4>
@@ -191,11 +191,11 @@ const SeedPhraseDecodeSection = () => {
               </button>
             </div>
           )}
-          
+
           <button onClick={resetForm} className="reset-btn">
             🔄 Extract Another Seed Phrase
           </button>
-          
+
           <div className="important-note">
             <h4>📝 Important:</h4>
             <ul>
@@ -226,7 +226,7 @@ const SeedPhraseDecodeSection = () => {
           <li>The first frame is extracted as an image containing the seed phrase</li>
           <li>The image shows your original seed phrase with checksum validation</li>
         </ul>
-        
+
         <div className="warning">
           <h4>⚠️ Security Reminder</h4>
           <ul>
