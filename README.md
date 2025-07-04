@@ -1,2 +1,2 @@
 # roll-my-credits
-ETHGlobal  Cannes
+ETHGlobal Cannes
