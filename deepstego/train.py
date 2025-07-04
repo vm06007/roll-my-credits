@@ -8,7 +8,6 @@ import os
 import argparse
 from tqdm import tqdm
 import random
-import string
 
 from models.networks import DeepStego
 from utils.text_processing import TextEncoder, TextAugmentor

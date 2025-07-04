@@ -1,8 +1,5 @@
-import torch
 import numpy as np
 from PIL import Image
-import io
-import hashlib
 
 class SimpleStego:
     """Simple but effective steganography for immediate demo"""
