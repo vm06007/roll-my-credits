@@ -1,6 +1,7 @@
 import { useState } from "react";
 import cn from "classnames";
 import styles from "../DemoA.module.sass";
+import SettingsModal from "@/components/SettingsModal";
 
 type ToastMessage = {
     id: string;
@@ -489,6 +490,13 @@ const EncodeKeyInCredits = ({
                             <h4 className={styles.cardTitle}>Original Video</h4>
                             <div className={styles.headerActions}>
                                 <button
+                                    className={styles.iconButton}
+                                    onClick={() => setShowSettingsModal(true)}
+                                    title="Encryption settings"
+                                >
+                                    ⚙️
+                                </button>
+                                <button
                                     className={cn("button", styles.headerButton)}
                                     onClick={handleEncode}
                                     disabled={isEncoding}
@@ -534,6 +542,14 @@ const EncodeKeyInCredits = ({
                     </div>
                 </div>
             </div>
+
+            {/* Settings Modal */}
+            <SettingsModal
+                visible={showSettingsModal}
+                onClose={() => setShowSettingsModal(false)}
+                settings={settings}
+                onSettingToggle={handleSettingToggle}
+            />
 
             {/* Toast Notifications */}
             <div className={styles.toastContainer}>

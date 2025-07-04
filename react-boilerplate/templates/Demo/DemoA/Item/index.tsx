@@ -21,4 +21,4 @@ const Item = ({ className, title, content, children, image }: ItemProps) => (
     </div>
 );
 
-export default Item;
+export default Item; 

@@ -10,7 +10,7 @@ This directory contains self-contained components for each tab in the Demo inter
 - **Features**:
     - Self-managed state for all form inputs
     - Input mode selection (Free Input / 12 Words)
-    - Upload method selection (Upload Image)
+    - Upload method selection (Upload Image / Generate with AI)
     - Two-card layout with original and encoded image preview
     - Integrated API calls and validation logic
 

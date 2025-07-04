@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import cn from "classnames";
 import styles from "../DemoA.module.sass";
+import SettingsModal from "@/components/SettingsModal";
 
 type EncodeKeyInPosterProps = {
     movies: string[];
@@ -530,6 +531,16 @@ const EncodeKeyInPoster = ({
                                 />
                                 Upload Image
                             </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="uploadMethod"
+                                    value="dropdown"
+                                    checked={uploadMethod === "dropdown"}
+                                    onChange={(e) => setUploadMethod(e.target.value as "upload" | "dropdown")}
+                                />
+                                Generate with AI
+                            </label>
                         </div>
 
                         <div className={styles.libraryIconContainer}>
@@ -624,6 +635,13 @@ const EncodeKeyInPoster = ({
                             <h4 className={styles.cardTitle}>Original Image</h4>
                             <div className={styles.headerActions}>
                                 <button
+                                    className={styles.iconButton}
+                                    onClick={() => setShowSettingsModal(true)}
+                                    title="Encryption settings"
+                                >
+                                    ⚙️
+                                </button>
+                                <button
                                     className={cn("button", styles.headerButton, {
                                         [styles.disabled]: isEncoding
                                     })}
@@ -671,6 +689,14 @@ const EncodeKeyInPoster = ({
                     </div>
                 </div>
             </div>
+
+            {/* Settings Modal */}
+            <SettingsModal
+                visible={showSettingsModal}
+                onClose={() => setShowSettingsModal(false)}
+                settings={settings}
+                onSettingToggle={handleSettingToggle}
+            />
 
             {/* Library Modal */}
             {showLibraryModal && (
