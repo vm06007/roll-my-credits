@@ -1,0 +1,60 @@
+@import @/styles/helpers
+
+.field
+    &.fieldIcon
+        .input,
+        .textarea
+            padding-left: 46px
+    &.fieldTextarea
+        font-size: 0
+        .icon
+            top: 14px
+            transform: translateY(0)
+    &.fieldLight
+        .input,
+        .textarea
+            border: 2px solid #1667E6
+            background: #1667E6
+            color: var(--color-bg-secondary)
+            &::placeholder
+                color: var(--color-bg-secondary)
+            &:focus
+                border-color: var(--color-bg-secondary)
+                background: transparent
+        .icon
+            fill: var(--color-bg-secondary)
+
+.wrap
+    position: relative
+    
+.input,
+.textarea
+    width: 100%
+    border: 2px solid transparent
+    background: var(--color-bg-tertiary)
+    border-radius: 8px
+    +baseM
+    color: var(--color-text-primary)
+    transition: background .2s, border-color .2s
+    &::placeholder
+        color: var(--color-text-secondary)
+    &:focus
+        border-color: var(--color-text-secondary)
+        background: transparent
+
+.input
+    height: 56px
+    padding: 0 14px
+
+.textarea
+    height: 144px
+    padding: 12px 14px
+    resize: none
+
+.icon
+    position: absolute
+    top: 50%
+    left: 14px
+    transform: translateY(-50%)
+    pointer-events: none
+    fill: var(--color-text-secondary)

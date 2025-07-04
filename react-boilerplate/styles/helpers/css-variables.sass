@@ -1,0 +1,46 @@
+@import ./variables
+
+// Define CSS variables for theming
+:root
+    // Primary colors
+    --color-primary: #{$blue}
+    --color-secondary: #{$purple}
+    --color-success: #{$green}
+
+    // Neutral colors
+    --color-bg-primary: #{$n1}
+    --color-bg-secondary: #{$n0}
+    --color-bg-tertiary: #{$n2}
+    --color-border: #{$n3}
+    --color-text-primary: #{$n7}
+    --color-text-secondary: #{$n4}
+    --color-text-tertiary: #{$n5}
+    --color-text-inverse: #{$n0}
+
+    // Component colors
+    --color-button-gray-bg: #{$n3}
+    --color-button-gray-text: #{$n7}
+    --color-button-black-bg: #{$n7}
+    --color-button-black-text: #{$n0}
+
+[data-theme="dark"]
+    // Primary colors for dark mode
+    --color-primary: #{$blue-dark}
+    --color-secondary: #{$purple-dark}
+    --color-success: #{$green-dark}
+
+    // Neutral colors for dark mode
+    --color-bg-primary: #{$n1-dark}
+    --color-bg-secondary: #{$n0-dark}
+    --color-bg-tertiary: #{$n2-dark}
+    --color-border: #{$n3-dark}
+    --color-text-primary: #{$n7-dark}
+    --color-text-secondary: #{$n5-dark}
+    --color-text-tertiary: #{$n6-dark}
+    --color-text-inverse: #{$n0-dark}
+
+    // Component colors for dark mode
+    --color-button-gray-bg: #{$n3-dark}
+    --color-button-gray-text: #{$n7-dark}
+    --color-button-black-bg: #{$n7-dark}
+    --color-button-black-text: #{$n0-dark}
