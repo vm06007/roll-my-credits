@@ -21,8 +21,7 @@ const DemoA = ({ scrollToRef }: DemoAProps) => {
 
     // Static data that components might need
     const movies = [
-        "Pulp Fiction", "Taxi Driver", "Apocalypse Now", "The Piano",
-        "The Tree of Life", "Amour",
+        "Pulp Fiction", "Taxi Driver", "Apocalypse Now", "The Piano", "Amour"
     ];
 
     const styles_options = ["Original Style", "Ghibli Style", "Minimalistic Style"];
