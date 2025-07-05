@@ -58,14 +58,14 @@ const DecodeKeyFromPoster = () => {
         formData.append("image", selectedFile);
 
         try {
-            const response = await fetch("http://localhost:8000/decode", {
+            const response = await fetch("http://localhost:3001/api/steganography/decode", {
                 method: "POST",
                 body: formData,
             });
 
             const result = await response.json();
                         if (result.success) {
-                setDecodedMessage(result.recovered_phrase);
+                setDecodedMessage(result.message);
                 showToast("Message revealed successfully!", 'success');
 
                 // Simulate recovery settings from the encoded data

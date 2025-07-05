@@ -184,17 +184,17 @@ const EncodeKeyInPoster = ({
             }
         }
 
-        formData.append("seed_phrase", phrase);
+        formData.append("message", phrase);
 
         try {
-            const response = await fetch("http://localhost:8000/encode", {
+            const response = await fetch("http://localhost:3001/api/steganography/encode", {
                 method: "POST",
                 body: formData,
             });
 
             const result = await response.json();
             if (result.success) {
-                setEncodedImage(`data:image/png;base64,${result.encoded_image}`);
+                setEncodedImage(`http://localhost:3001${result.url}`);
                 showToast("Message encoded successfully!", 'success');
             } else {
                 showToast("Encoding failed. Please try again.", 'error');
@@ -207,13 +207,24 @@ const EncodeKeyInPoster = ({
         }
     };
 
-    const handleDownloadEncoded = () => {
+    const handleDownloadEncoded = async () => {
         if (encodedImage) {
-            const link = document.createElement('a');
-            link.href = encodedImage;
-            link.download = 'hidden-image.png';
-            link.click();
-            showToast("Image downloaded successfully!", 'success');
+            try {
+                const response = await fetch(encodedImage);
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'hidden-image.png';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
+                showToast("Image downloaded successfully!", 'success');
+            } catch (error) {
+                console.error('Download failed:', error);
+                showToast("Download failed. Please try again.", 'error');
+            }
         }
     };
 
