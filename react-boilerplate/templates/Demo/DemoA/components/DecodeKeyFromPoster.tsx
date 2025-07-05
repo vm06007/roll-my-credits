@@ -185,10 +185,10 @@ const DecodeKeyFromPoster = () => {
                                             <h4 className={styles.recoveryTitle}>Recover Settings</h4>
                                             <div className={styles.settingsGrid}>
                                                 <div className={styles.settingBox}>
-                                                    Password Protected - {recoverySettings.passwordProtected ? "Yes" : "No"}
+                                                    Require Password - {recoverySettings.passwordProtected ? "Yes" : "No"}
                                                 </div>
                                                 <div className={styles.settingBox}>
-                                                    Require World ID - {recoverySettings.requireWorldID ? "Yes" : "No"}
+                                                    Require Payment - {recoverySettings.requireWorldID ? "Yes" : "No"}
                                                 </div>
                                                 {recoverySettings.duressMode && (
                                                     <div className={styles.settingBox}>
