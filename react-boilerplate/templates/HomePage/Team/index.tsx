@@ -60,14 +60,20 @@ const Team = ({}: TeamProps) => {
                     <div className={styles.list}>
                         {team.map((item, index) => (
                             <div className={styles.item} key={index}>
-                                <div className={styles.photo}>
+                                <a
+                                    href={item.linkedin}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={styles.photo}
+                                    style={{ display: 'block' }}
+                                >
                                     <Image
                                         src={item.photo}
                                         layout="fill"
                                         objectFit="cover"
                                         alt="Photo"
                                     />
-                                </div>
+                                </a>
                                 <div className={cn("h5M", styles.name)}>
                                     {item.name}
                                 </div>
