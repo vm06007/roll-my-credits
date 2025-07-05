@@ -16,7 +16,7 @@ type EncodeKeyInCreditsProps = {
 const EncodeKeyInCredits = ({
     wordTypes,
 }: EncodeKeyInCreditsProps) => {
-    const [inputMode, setInputMode] = useState<"free" | "words" | "image">("free");
+    const [inputMode, setInputMode] = useState<"free" | "words">("free");
     const [seedPhrase, setSeedPhrase] = useState("");
     const [wordInputs, setWordInputs] = useState(Array(12).fill(""));
     const [wordType, setWordType] = useState("original");
@@ -24,8 +24,7 @@ const EncodeKeyInCredits = ({
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [selectedDemoVideo, setSelectedDemoVideo] = useState("");
     const [originalImagePreview, setOriginalImagePreview] = useState<string | null>(null);
-    const [secretImageFile, setSecretImageFile] = useState<File | null>(null);
-    const [secretImagePreview, setSecretImagePreview] = useState<string | null>(null);
+
     const [encodedImage, setEncodedImage] = useState<string | null>(null);
     const [isEncoding, setIsEncoding] = useState(false);
     const [mnemonicHidden, setMnemonicHidden] = useState(false); // Default to visible/not blurred
@@ -91,19 +90,7 @@ const EncodeKeyInCredits = ({
         }
     };
 
-    const handleSecretImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            const file = e.target.files[0];
-            setSecretImageFile(file);
 
-            // Create preview URL for the selected secret image
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                setSecretImagePreview(event.target?.result as string);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
 
     const handleWordChange = (index: number, value: string) => {
         const newWords = [...wordInputs];
@@ -129,14 +116,8 @@ const EncodeKeyInCredits = ({
         // Validation with toast notifications
         const errors: string[] = [];
 
-        if (inputMode === "image") {
-            if (!secretImageFile) {
-                errors.push("Please select a secret image to hide");
-            }
-        } else {
-            if (!phrase.trim()) {
-                errors.push("Please enter a seed phrase or mnemonic words");
-            }
+        if (!phrase.trim()) {
+            errors.push("Please enter a seed phrase or mnemonic words");
         }
 
         // Check if video is selected (either uploaded or demo)
@@ -156,36 +137,34 @@ const EncodeKeyInCredits = ({
         setIsEncoding(true);
         const formData = new FormData();
 
+        // Use the correct video file parameter for video steganography API
         if (uploadMethod === "upload" && selectedFile) {
-            // Note: The deepstego API expects 'image' parameter, even for video files
-            formData.append("image", selectedFile);
+            formData.append("video", selectedFile);
         } else if (uploadMethod === "demo" && selectedDemoVideo) {
-            // For demo videos, send the filename
-            const selectedVideo = demoVideos.find(video => video.title === selectedDemoVideo);
-            if (selectedVideo) {
-                formData.append("demo_video", selectedVideo.filename);
-            }
+            // For demo videos, we'll need to handle this differently
+            // For now, show error as demo videos aren't supported yet
+            showToast("Demo videos not yet supported. Please upload a video file.", 'warning');
+            setIsEncoding(false);
+            return;
         }
 
-        // Handle different input modes
-        if (inputMode === "image" && secretImageFile) {
-            formData.append("secret_image", secretImageFile);
-        } else {
-            formData.append("seed_phrase", phrase);
-        }
+        // Add the message to hide
+        formData.append("message", phrase);
 
         try {
-            const response = await fetch("http://localhost:8000/encode", {
+            const response = await fetch("http://localhost:3001/api/video-steganography/encode", {
                 method: "POST",
                 body: formData,
             });
 
             const result = await response.json();
             if (result.success) {
-                setEncodedImage(`data:video/mp4;base64,${result.encoded_video}`);
-                showToast("Video processed successfully! Secret data hidden.", 'success');
+                // Create download URL for the encoded video
+                const videoUrl = `http://localhost:3001${result.url}`;
+                setEncodedImage(videoUrl);
+                showToast(`Video processed successfully! Hidden message in ${result.framesUsed}/${result.totalFrames} frames.`, 'success');
             } else {
-                showToast(result.message || "Failed to process video", 'error');
+                showToast(result.error || "Failed to process video", 'error');
             }
         } catch (error) {
             console.error("Error:", error);
@@ -201,6 +180,7 @@ const EncodeKeyInCredits = ({
             link.href = encodedImage;
             link.download = 'hidden-video.mp4';
             link.click();
+            showToast("Video downloaded successfully!", 'success');
         }
     };
 
@@ -260,7 +240,7 @@ const EncodeKeyInCredits = ({
                                     value="free"
                                     checked={inputMode === "free"}
                                     onChange={(e) => {
-                                        setInputMode(e.target.value as "free" | "words" | "image");
+                                        setInputMode(e.target.value as "free" | "words");
                                         setMnemonicHidden(false); // Reset to visible when switching modes
                                     }}
                                 />
@@ -273,24 +253,11 @@ const EncodeKeyInCredits = ({
                                     value="words"
                                     checked={inputMode === "words"}
                                     onChange={(e) => {
-                                        setInputMode(e.target.value as "free" | "words" | "image");
+                                        setInputMode(e.target.value as "free" | "words");
                                         setMnemonicHidden(false); // Reset to visible when switching to mnemonic mode
                                     }}
                                 />
                                 Mnemonic Phrase
-                            </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="creditInputMode"
-                                    value="image"
-                                    checked={inputMode === "image"}
-                                    onChange={(e) => {
-                                        setInputMode(e.target.value as "free" | "words" | "image");
-                                        setMnemonicHidden(false); // Reset to visible when switching modes
-                                    }}
-                                />
-                                Secret Image
                             </label>
                         </div>
 
@@ -352,10 +319,7 @@ const EncodeKeyInCredits = ({
                                         🇨🇳
                                     </button>
                                 </>
-                            ) : (
-                                // Image mode - no generation icons needed
-                                <div className={styles.iconPlaceholder}></div>
-                            )}
+                            ) : null}
                         </div>
                     </div>
 
@@ -387,30 +351,7 @@ const EncodeKeyInCredits = ({
                                 </div>
                             ))}
                         </div>
-                    ) : (
-                        /* Secret Image Upload */
-                        <div className={styles.secretImageSection}>
-                            <div className={styles.uploadArea} onClick={() => document.getElementById('secret-image-file')?.click()}>
-                                {secretImageFile ? (
-                                    <span>Selected: {secretImageFile.name}</span>
-                                ) : (
-                                    <span>Click to upload secret image</span>
-                                )}
-                                <input
-                                    id="secret-image-file"
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={handleSecretImageChange}
-                                    style={{ display: 'none' }}
-                                />
-                            </div>
-                            {secretImagePreview && (
-                                <div className={styles.secretImagePreview}>
-                                    <img src={secretImagePreview} alt="Secret image preview" className={styles.previewImage} />
-                                </div>
-                            )}
-                        </div>
-                    )}
+                    ) : null}
 
                     {/* Upload Method Selection */}
                     <div className={styles.uploadMethodSelectContainer}>

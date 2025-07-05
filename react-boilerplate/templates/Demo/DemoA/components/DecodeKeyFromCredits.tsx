@@ -50,36 +50,29 @@ const DecodeKeyFromCredits = () => {
             return;
         }
 
-                setIsDecoding(true);
+                        setIsDecoding(true);
         const formData = new FormData();
-        // Note: The deepstego API expects 'image' parameter, even for video files
-        formData.append("image", selectedFile);
+        // Use the correct video parameter for video steganography API
+        formData.append("video", selectedFile);
 
         try {
-            const response = await fetch("http://localhost:8000/decode", {
+            const response = await fetch("http://localhost:3001/api/video-steganography/decode", {
                 method: "POST",
                 body: formData,
             });
 
             const result = await response.json();
-                        if (result.success) {
-                setDecodedMessage(result.recovered_phrase);
+            if (result.success) {
+                setDecodedMessage(result.message);
                 showToast("Message revealed successfully!", 'success');
                 
-                // Simulate recovery settings from the encoded data
+                // Video steganography doesn't have these settings yet, so we'll keep this simple
                 setRecoverySettings({
-                    passwordProtected: result.settings?.passwordProtected || false,
-                    requireWorldID: result.settings?.requireWorldID || false,
-                    duressMode: result.settings?.duressMode || false,
-                    requirePayment: result.settings?.requirePayment || false,
+                    passwordProtected: false,
+                    requireWorldID: false,
+                    duressMode: false,
+                    requirePayment: false,
                 });
-                
-                // Check if password is required
-                if (result.settings?.passwordProtected && !passwordInput) {
-                    setShowPasswordInput(true);
-                    setDecodedMessage(null);
-                    showToast("This video is password protected. Please enter the password.", 'info');
-                }
             } else {
                 showToast("Revealing failed. Please try again.", 'error');
             }
