@@ -3,6 +3,7 @@ import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import fs from 'fs/promises';
 import steganographyService from '../services/steganography.js';
 import crypto from 'crypto';
 
@@ -49,11 +50,18 @@ router.post('/encode', upload.single('image'), async (req, res) => {
     }
 
     const inputPath = req.file.path;
-    const outputFilename = `encoded-${req.file.filename}`;
+    const outputFilename = `encoded-${path.parse(req.file.filename).name}.png`;
     const outputPath = join(dirname(__dirname), 'output', outputFilename);
 
     const encodedImage = await steganographyService.encodeMessage(inputPath, message);
     await encodedImage.writeAsync(outputPath);
+
+    // Clean up uploaded file
+    try {
+      await fs.unlink(req.file.path);
+    } catch (cleanupError) {
+      console.warn('Could not clean up uploaded file:', cleanupError.message);
+    }
 
     res.json({
       success: true,
@@ -63,6 +71,16 @@ router.post('/encode', upload.single('image'), async (req, res) => {
 
   } catch (error) {
     console.error('Encoding error:', error);
+    
+    // Clean up uploaded file on error
+    if (req.file) {
+      try {
+        await fs.unlink(req.file.path);
+      } catch (cleanupError) {
+        console.warn('Could not clean up uploaded file after error:', cleanupError.message);
+      }
+    }
+    
     res.status(500).json({ error: error.message });
   }
 });
@@ -73,8 +91,19 @@ router.post('/decode', upload.single('image'), async (req, res) => {
       return res.status(400).json({ error: 'No image file provided' });
     }
 
+    console.log('Decoding file:', req.file.filename, 'at path:', req.file.path);
+    
     const inputPath = req.file.path;
     const message = await steganographyService.decodeMessage(inputPath);
+
+    console.log('Successfully decoded message:', message);
+
+    // Clean up uploaded file
+    try {
+      await fs.unlink(req.file.path);
+    } catch (cleanupError) {
+      console.warn('Could not clean up uploaded file:', cleanupError.message);
+    }
 
     res.json({
       success: true,
@@ -83,6 +112,16 @@ router.post('/decode', upload.single('image'), async (req, res) => {
 
   } catch (error) {
     console.error('Decoding error:', error);
+    
+    // Clean up uploaded file on error
+    if (req.file) {
+      try {
+        await fs.unlink(req.file.path);
+      } catch (cleanupError) {
+        console.warn('Could not clean up uploaded file after error:', cleanupError.message);
+      }
+    }
+    
     res.status(500).json({ error: error.message });
   }
 });

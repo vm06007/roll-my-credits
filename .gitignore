@@ -153,3 +153,5 @@ hardhat-example/artifacts
 hardhat-example/artifacts
 hardhat-example/artifacts
 hardhat-example/cache
+backend/uploads
+backend/uploads

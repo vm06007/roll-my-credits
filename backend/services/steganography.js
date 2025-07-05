@@ -14,7 +14,7 @@ class SteganographyService {
     binaryToText(binary) {
         let text = '';
         for (let i = 0; i < binary.length; i += 8) {
-            const byte = binary.substr(i, 8);
+            const byte = binary.substring(i, i + 8);
             if (byte.length < 8) break;
             const charCode = parseInt(byte, 2);
             if (charCode === 0) break;
@@ -39,6 +39,7 @@ class SteganographyService {
             image.scan(0, 0, image.bitmap.width, image.bitmap.height, function (x, y, idx) {
                 if (binaryIndex >= binaryMessage.length) return;
 
+                // Skip alpha channel, only use RGB
                 for (let i = 0; i < 3 && binaryIndex < binaryMessage.length; i++) {
                     const colorValue = this.bitmap.data[idx + i];
                     const bit = parseInt(binaryMessage[binaryIndex]);
@@ -55,25 +56,39 @@ class SteganographyService {
 
     async decodeMessage(imagePath) {
         try {
+            console.log('Reading image from path:', imagePath);
             const image = await Jimp.read(imagePath);
+            console.log('Image dimensions:', image.bitmap.width, 'x', image.bitmap.height);
+            
             let binaryMessage = '';
 
             image.scan(0, 0, image.bitmap.width, image.bitmap.height, function (x, y, idx) {
+                // Skip alpha channel, only use RGB (same as encoding)
                 for (let i = 0; i < 3; i++) {
                     const colorValue = this.bitmap.data[idx + i];
                     binaryMessage += (colorValue & 1).toString();
                 }
             });
 
+            console.log('Extracted binary message length:', binaryMessage.length);
+            console.log('First 100 bits:', binaryMessage.substring(0, 100));
             const decodedText = this.binaryToText(binaryMessage);
+            console.log('Decoded text length:', decodedText.length);
+            console.log('First 50 chars of decoded text:', decodedText.substring(0, 50).replace(/\0/g, '\\0'));
+            
             const delimiterIndex = decodedText.indexOf(this.messageDelimiter);
+            console.log('Looking for delimiter:', this.messageDelimiter);
+            console.log('Delimiter index:', delimiterIndex);
 
             if (delimiterIndex === -1) {
                 throw new Error('No hidden message found in this image');
             }
 
-            return decodedText.substring(0, delimiterIndex);
+            const message = decodedText.substring(0, delimiterIndex);
+            console.log('Final decoded message:', message);
+            return message;
         } catch (error) {
+            console.error('Steganography service decode error:', error);
             throw new Error(`Decoding failed: ${error.message}`);
         }
     }
