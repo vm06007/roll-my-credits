@@ -1,10 +1,10 @@
-# Roll My Credits 🎬🔐
+# 🎥 Roll The Credits 🎬+🔐
 
 A steganography application for hiding cryptocurrency seed phrases in movie posters and credit sequences. Created for ETHGlobal Cannes hackathon.
 
 ## Overview
 
-Roll My Credits combines traditional steganography techniques with deep learning to securely hide sensitive information (like crypto wallet recovery phrases) in media files. The project offers multiple encoding methods, from simple image manipulation to advanced neural network-based approaches.
+Roll The Credits combines traditional steganography techniques with deep learning to securely hide sensitive information (like crypto wallet recovery phrases) in media files. The project offers multiple encoding methods, from simple image manipulation to advanced neural network-based approaches.
 
 ## Features
 
@@ -36,6 +36,15 @@ Our steganography techniques can be applied to various scenarios where discrete 
 #### Secret Data Import/Export
 ![Secret Image Import](use-case-exmples/import-secret-image.jpg)
 *Importing sensitive data through seemingly innocent image files*
+
+## MCP Server
+
+The MCP (Multi-Channel Processing) server is a core part of our backend infrastructure. It enables advanced steganography workflows, batch processing, and integration with external services. The MCP server can handle multiple encoding/decoding jobs in parallel, making it ideal for high-throughput or automated use cases.
+
+**Example MCP Use Case:**
+
+![MCP Use Case Example](use-case-exmples/good-example.jpg)
+*An example of MCP server processing a batch of secret images for secure distribution.*
 
 ## Tech Stack
 
