@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "steganography": {
+      "command": "node",
+      "args": ["/Users/vm06007/Development/roll-the-credits/steganography/backend/mcp-server.js"],
+      "env": {}
+    }
+  }
+}

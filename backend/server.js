@@ -1,9 +1,11 @@
 import express from 'express';
 import cors from 'cors';
+import multer from 'multer';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import fs from 'fs/promises';
 import steganographyRoutes from './routes/steganography.js';
+import videoSteganographyRoutes from './routes/videoSteganography.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -32,6 +34,7 @@ app.use('/uploads', express.static(uploadsDir));
 app.use('/output', express.static(outputDir));
 
 app.use('/api/steganography', steganographyRoutes);
+app.use('/api/video-steganography', videoSteganographyRoutes);
 
 app.get('/health', (req, res) => {
   res.json({ status: 'healthy' });

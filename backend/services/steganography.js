@@ -1,7 +1,6 @@
 import Jimp from 'jimp';
 
 class SteganographyService {
-
     constructor() {
         this.messageDelimiter = '<<END>>';
     }
