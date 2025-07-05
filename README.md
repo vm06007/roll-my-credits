@@ -37,14 +37,32 @@ Our steganography techniques can be applied to various scenarios where discrete 
 ![Secret Image Import](use-case-exmples/import-secret-image.jpg)
 *Importing sensitive data through seemingly innocent image files*
 
-## MCP Server
+## MCP Server for Steganography Workflows
 
-The MCP (Multi-Channel Processing) server is a core part of our backend infrastructure. It enables advanced steganography workflows, batch processing, and integration with external services. The MCP server can handle multiple encoding/decoding jobs in parallel, making it ideal for high-throughput or automated use cases.
+The steganography backend includes an **MCP (Multi-Channel Processing) server** for advanced, automated, and AI-assisted steganography workflows. This enables batch processing, integration with external services, and high-throughput encoding/decoding jobs.
 
 **Example MCP Use Case:**
 
 ![MCP Use Case Example](use-case-exmples/good-example.jpg)
-*An example of MCP server processing a batch of secret images for secure distribution.*
+*An example of the MCP server processing a batch of secret images for secure distribution.*
+
+## 🚀 Hardhat MCP Server (Model Context Protocol)
+
+This project also includes a **full-featured MCP server for Hardhat** (see the `hardhat-mcp-server` directory). The Hardhat MCP server enables AI assistants and tools (like Claude Desktop) to perform advanced smart contract development, testing, deployment, and blockchain operations using natural language or programmatic requests.
+
+- **Directory:** `hardhat-mcp-server`
+- **Screenshots:** See `hardhat-mcp-server/mcp-demo-screenshots` for UI and workflow examples
+- **Full documentation:** [hardhat-mcp-server/README.md](hardhat-mcp-server/README.md)
+
+For a complete list of features, configuration options, and usage examples, see the [hardhat-mcp-server/README.md](hardhat-mcp-server/README.md).
+
+### Example Supported Actions
+- Start and manage local Hardhat nodes
+- Compile, test, and deploy Solidity contracts
+- Run TypeScript and Solidity tests
+- Execute custom scripts
+- Query balances, send transactions, and interact with contracts
+- File management (create, read, list, etc.)
 
 ## Tech Stack
 
