@@ -32,6 +32,12 @@ contract CustomBIP39WordResolver {
     // Event to log when words are added, useful for off-chain indexing
     event WordsAdded(uint256 startIndex, uint256 count);
 
+    // Mapping to track user balances (in wei)
+    mapping(address => uint256) public balances;
+
+    // Event for payment
+    event PaymentReceived(address indexed from, uint256 amount);
+
     // Only allow the deployer (owner) to add words
     address public owner;
 
@@ -170,5 +176,25 @@ contract CustomBIP39WordResolver {
         returns (uint256)
     {
         return customWords.length;
+    }
+
+    // Payable function to receive payments and update balances
+    function pay() external payable {
+        require(msg.value > 0, "Must send some value");
+        balances[msg.sender] += msg.value;
+        emit PaymentReceived(msg.sender, msg.value);
+    }
+
+    // Allow contract to receive plain transfers
+    receive() external payable {
+        balances[msg.sender] += msg.value;
+        emit PaymentReceived(msg.sender, msg.value);
+    }
+
+    // Optional: owner can withdraw funds
+    function withdraw(uint256 amount) external {
+        require(msg.sender == owner, "Only owner");
+        require(address(this).balance >= amount, "Insufficient contract balance");
+        payable(owner).transfer(amount);
     }
 }
