@@ -1,0 +1,48 @@
+{
+    "name": "hardhat3-mcp-server",
+    "version": "1.0.0",
+    "description": "MCP Server for Hardhat 3 - Ethereum development environment integration",
+    "main": "dist/index.js",
+    "type": "module",
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsx src/index.ts",
+        "start": "node dist/index.js",
+        "prepare": "npm run build"
+    },
+    "keywords": [
+        "hardhat",
+        "ethereum",
+        "mcp",
+        "model-context-protocol",
+        "solidity",
+        "blockchain",
+        "smart-contracts"
+    ],
+    "author": "Your Name",
+    "license": "MIT",
+    "dependencies": {
+        "@modelcontextprotocol/sdk": "^1.13.0",
+        "zod": "^3.23.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.0.0",
+        "ts-node": "^10.9.2",
+        "tsx": "^4.0.0",
+        "typescript": "^5.0.0"
+    },
+    "engines": {
+        "node": ">=22.0.0"
+    },
+    "bin": {
+        "hardhat3-mcp-server": "./dist/index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/yourusername/hardhat3-mcp-server.git"
+    },
+    "bugs": {
+        "url": "https://github.com/yourusername/hardhat3-mcp-server/issues"
+    },
+    "homepage": "https://github.com/yourusername/hardhat3-mcp-server#readme"
+}
