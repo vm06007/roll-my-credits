@@ -140,3 +140,5 @@ vite.config.ts.timestamp-*
 frontend/.vite/deps/
 __pycache__/
 deepstego/checkpoints/
+backend/temp/
+backend/output/
