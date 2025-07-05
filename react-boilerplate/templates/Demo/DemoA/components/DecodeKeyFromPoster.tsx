@@ -8,6 +8,28 @@ type ToastMessage = {
     type: 'error' | 'warning' | 'success' | 'info';
 };
 
+const FLOW_EVM_PARAMS = {
+    chainId: '0x221', // 545 in hex
+    chainName: 'Flow EVM Testnet',
+    nativeCurrency: {
+        name: 'Flow',
+        symbol: 'FLOW',
+        decimals: 18,
+    },
+    rpcUrls: ['https://testnet.evm.nodes.onflow.org'],
+    blockExplorerUrls: ['https://evm-testnet.flowscan.io'],
+};
+const CONTRACT_ADDRESS = '0x2bBaEEFC458bDE7b4628AcCb48E7Cbd3Bfd2187d';
+
+// Add this type for window.ethereum
+// @ts-ignore
+// eslint-disable-next-line
+declare global {
+    interface Window {
+        ethereum?: any;
+    }
+}
+
 const DecodeKeyFromPoster = () => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [isDecoding, setIsDecoding] = useState(false);
@@ -18,6 +40,7 @@ const DecodeKeyFromPoster = () => {
     const [showPasswordInput, setShowPasswordInput] = useState(false);
     const [toasts, setToasts] = useState<ToastMessage[]>([]);
     const [requirePayment, setRequirePayment] = useState(false);
+    const [paymentInProgress, setPaymentInProgress] = useState(false);
 
     const showToast = (message: string, type: ToastMessage['type'] = 'error') => {
         const id = Date.now().toString();
@@ -54,7 +77,7 @@ const DecodeKeyFromPoster = () => {
             return;
         }
 
-                setIsDecoding(true);
+        setIsDecoding(true);
         const formData = new FormData();
         formData.append("image", selectedFile);
 
@@ -65,7 +88,7 @@ const DecodeKeyFromPoster = () => {
             });
 
             const result = await response.json();
-                        if (result.success) {
+            if (result.success) {
                 setDecodedMessage(result.message);
                 showToast("Message revealed successfully!", 'success');
 
@@ -92,6 +115,55 @@ const DecodeKeyFromPoster = () => {
         } finally {
             setIsDecoding(false);
         }
+    };
+
+    async function connectAndSwitchNetwork() {
+        if (!window.ethereum) throw new Error('MetaMask not found');
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        try {
+            await window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: FLOW_EVM_PARAMS.chainId }],
+            });
+        } catch (switchError) {
+            if ((switchError as any).code === 4902) {
+                await window.ethereum.request({
+                    method: 'wallet_addEthereumChain',
+                    params: [FLOW_EVM_PARAMS],
+                });
+            } else {
+                throw switchError;
+            }
+        }
+    }
+
+    async function sendPayment(amountEth = '0.01') {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const from = accounts[0];
+        // Convert to hex (wei)
+        const value = (BigInt(Math.floor(Number(amountEth) * 1e18))).toString(16);
+        const tx = {
+            from,
+            to: CONTRACT_ADDRESS,
+            value: '0x' + value,
+        };
+        await window.ethereum.request({
+            method: 'eth_sendTransaction',
+            params: [tx],
+        });
+    }
+
+    const handlePayment = async () => {
+        setPaymentInProgress(true);
+        try {
+            await connectAndSwitchNetwork();
+            await sendPayment('0.01'); // 0.01 FLOW
+            setRequirePayment(false); // Unblur secret
+            showToast('Payment successful! Secret revealed.', 'success');
+        } catch (err) {
+            showToast('Payment failed or cancelled.', 'error');
+        }
+        setPaymentInProgress(false);
     };
 
     // Check if decoded message contains 12 words (BIP-39 format)
@@ -136,7 +208,7 @@ const DecodeKeyFromPoster = () => {
                         <div className={styles.passwordSection}>
                             <input
                                 type="password"
-                                                                    placeholder="Enter password to reveal"
+                                placeholder="Enter password to reveal"
                                 value={passwordInput}
                                 onChange={(e) => setPasswordInput(e.target.value)}
                                 className={styles.passwordInput}
@@ -158,7 +230,7 @@ const DecodeKeyFromPoster = () => {
                                 onClick={handleDecode}
                                 disabled={isDecoding}
                             >
-                                                                    {isDecoding ? "Revealing..." : "Reveal Message"}
+                                {isDecoding ? "Revealing..." : "Reveal Message"}
                             </button>
                         </div>
                         <div className={styles.imagePreviewArea}>
@@ -185,7 +257,7 @@ const DecodeKeyFromPoster = () => {
                                         <div className={styles.recoverySettings}>
                                             <h4 className={styles.recoveryTitle}>Recover Settings</h4>
                                             <div className={styles.settingsGrid}>
-                                            <div className={styles.settingBox}>
+                                                <div className={styles.settingBox}>
                                                     Require Password - {recoverySettings.requireWorldID ? "Yes" : "No"}
                                                 </div>
                                                 <div
@@ -232,10 +304,11 @@ const DecodeKeyFromPoster = () => {
                                         {requirePayment && (
                                             <button
                                                 className={styles.button}
-                                                style={{ marginTop: 16 }}
-                                                onClick={() => alert('Payment flow would go here!')}
+                                                style={{ marginTop: 16, width: '100%' }}
+                                                onClick={handlePayment}
+                                                disabled={paymentInProgress}
                                             >
-                                                Maybe Payment
+                                                {paymentInProgress ? 'Processing Payment...' : 'Make Payment to Reveal'}
                                             </button>
                                         )}
                                     </div>
