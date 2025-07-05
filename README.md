@@ -15,6 +15,62 @@ Roll My Credits combines traditional steganography techniques with deep learning
 - **User-Friendly Interface**: React-based web app with intuitive encode/decode workflows
 - **Blockchain Integration**: Ethereum smart contract for decentralized word mapping
 
+## Visual Overview
+
+### Steganography Theory
+
+Understanding how information can be hidden in plain sight:
+
+![Basic Steganography Concept](theory/basic-stego.webp)
+
+*Basic steganography methodology - hiding data within digital media*
+
+### Real-World Use Cases
+
+Our steganography techniques can be applied to various scenarios where discrete information sharing is essential:
+
+#### Digital Privacy & Security
+![Visual Data Exposure](use-case-exmples/visual-exposure.jpg)
+*Example of visual data exposure vulnerabilities that steganography can help protect against*
+
+#### Secure Information Transfer
+![Spy Leak Prevention](use-case-exmples/spy-leak.jpg)
+*Demonstrating secure data transfer methods to prevent information leaks*
+
+#### Secret Data Import/Export
+![Secret Image Import](use-case-exmples/import-secret-image.jpg)
+*Importing sensitive data through seemingly innocent image files*
+
+## Application Interface
+
+### Main Dashboard
+![Main Interface](react-boilerplate/public/images/website-pic.png)
+*Clean, intuitive interface for encoding and decoding operations*
+
+### Desktop Experience
+![Desktop Interface](react-boilerplate/public/images/website-pic-desktop.png)
+*Full desktop interface with comprehensive encoding options*
+
+### Mobile Support
+![Mobile Interface](react-boilerplate/public/images/website-pic-mobile.png)
+*Responsive mobile design for on-the-go steganography*
+
+### Encoding Process
+![Secret Image Encoding](react-boilerplate/public/images/show-secret-image.jpg)
+*Step-by-step process of hiding secret messages in images*
+
+### Decoding Process
+![Secret Image Reveal](react-boilerplate/public/images/reveal-secret-image.png)
+*Extracting hidden messages from encoded media files*
+
+### Deep Learning Integration
+![DeepStego AI](react-boilerplate/public/images/deepstego.jpg)
+*Advanced AI-powered steganography using neural networks*
+
+### Application Flow
+![User Flow](react-boilerplate/public/images/flow.jpg)
+*Complete user journey from encoding to decoding*
+
 ## Tech Stack
 
 ### Frontend
