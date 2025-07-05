@@ -19,7 +19,7 @@ const FLOW_EVM_PARAMS = {
     rpcUrls: ['https://testnet.evm.nodes.onflow.org'],
     blockExplorerUrls: ['https://evm-testnet.flowscan.io'],
 };
-const CONTRACT_ADDRESS = '0x2bBaEEFC458bDE7b4628AcCb48E7Cbd3Bfd2187d';
+const CONTRACT_ADDRESS = '0xe2813e30B0F3CDD5534db2fBD649FAc432b29502';
 
 // Add this type for window.ethereum
 // @ts-ignore
@@ -41,6 +41,7 @@ const DecodeKeyFromPoster = () => {
     const [toasts, setToasts] = useState<ToastMessage[]>([]);
     const [requirePayment, setRequirePayment] = useState(false);
     const [paymentInProgress, setPaymentInProgress] = useState(false);
+    const [waitingForConfirmation, setWaitingForConfirmation] = useState(false);
 
     const showToast = (message: string, type: ToastMessage['type'] = 'error') => {
         const id = Date.now().toString();
@@ -147,24 +148,54 @@ const DecodeKeyFromPoster = () => {
             to: CONTRACT_ADDRESS,
             value: '0x' + value,
         };
-        await window.ethereum.request({
+        const txHash = await window.ethereum.request({
             method: 'eth_sendTransaction',
             params: [tx],
         });
+        return txHash as string;
     }
 
     const handlePayment = async () => {
         setPaymentInProgress(true);
+        setWaitingForConfirmation(false);
         try {
             await connectAndSwitchNetwork();
-            await sendPayment('0.01'); // 0.01 FLOW
+            const txHash = await sendPayment('0.01');
+            showToast('Payment sent! Waiting for confirmation...', 'info');
+            setWaitingForConfirmation(true);
+            await waitForTxConfirmation(txHash);
+            // Wait 2 seconds after confirmation
+            await new Promise(res => setTimeout(res, 2000));
             setRequirePayment(false); // Unblur secret
-            showToast('Payment successful! Secret revealed.', 'success');
+            showToast('Payment confirmed! Secret revealed.', 'success');
         } catch (err) {
-            showToast('Payment failed or cancelled.', 'error');
+            showToast('Payment failed, cancelled, or not confirmed.', 'error');
         }
+        setWaitingForConfirmation(false);
         setPaymentInProgress(false);
     };
+
+    async function waitForTxConfirmation(txHash: string, timeout = 60000, interval = 3000) {
+        const start = Date.now();
+        while (Date.now() - start < timeout) {
+            const res = await fetch('https://testnet.evm.nodes.onflow.org', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    jsonrpc: '2.0',
+                    method: 'eth_getTransactionReceipt',
+                    params: [txHash],
+                    id: 1,
+                }),
+            });
+            const data = await res.json();
+            if (data.result && data.result.status === '0x1') {
+                return true;
+            }
+            await new Promise(r => setTimeout(r, interval));
+        }
+        throw new Error('Transaction not confirmed in time');
+    }
 
     // Check if decoded message contains 12 words (BIP-39 format)
     const is12WordPhrase = decodedMessage && decodedMessage.trim().split(' ').length === 12;
@@ -302,14 +333,25 @@ const DecodeKeyFromPoster = () => {
                                             </div>
                                         )}
                                         {requirePayment && (
-                                            <button
-                                                className={styles.button}
-                                                style={{ marginTop: 16, width: '100%' }}
-                                                onClick={handlePayment}
-                                                disabled={paymentInProgress}
-                                            >
-                                                {paymentInProgress ? 'Processing Payment...' : 'Make Payment to Reveal'}
-                                            </button>
+                                            <div style={{ width: '100%' }}>
+                                                <button
+                                                    className={styles.button}
+                                                    style={{ marginTop: 16, width: '100%' }}
+                                                    onClick={handlePayment}
+                                                    disabled={paymentInProgress || waitingForConfirmation}
+                                                >
+                                                    {paymentInProgress
+                                                        ? 'Processing Payment...'
+                                                        : waitingForConfirmation
+                                                            ? 'Waiting for Confirmation...'
+                                                            : 'Make Payment to Reveal'}
+                                                </button>
+                                                {waitingForConfirmation && (
+                                                    <div style={{ marginTop: 12, textAlign: 'center', color: '#888' }}>
+                                                        Waiting for transaction confirmation...
+                                                    </div>
+                                                )}
+                                            </div>
                                         )}
                                     </div>
                                 </div>
