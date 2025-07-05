@@ -1,4 +1,5 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: -BCOM-
+
 pragma solidity ^0.8.0;
 
 /**
@@ -157,52 +158,6 @@ contract CustomBIP39WordResolver {
             }
         }
         return resolvedWords;
-    }
-
-    /**
-     * @dev **Convenience function:** Resolves 12 individual custom words to their
-     * corresponding standard BIP-39 indices.
-     * Internally calls the array-based `getOriginalBIP39Indices` function.
-     * @return An array of 12 uint16 representing the standard BIP-39 indices.
-     */
-    function getOriginalBIP39Indices12(
-        string calldata _w1, string calldata _w2, string calldata _w3, string calldata _w4,
-        string calldata _w5, string calldata _w6, string calldata _w7, string calldata _w8,
-        string calldata _w9, string calldata _w10, string calldata _w11, string calldata _w12
-    )
-        public
-        view
-        returns (uint16[] memory)
-    {
-        string[] memory words = new string[](BIP39_LENGTH_12);
-        words[0] = _w1; words[1] = _w2; words[2] = _w3; words[3] = _w4;
-        words[4] = _w5; words[5] = _w6; words[6] = _w7; words[7] = _w8;
-        words[8] = _w9; words[9] = _w10; words[10] = _w11; words[11] = _w12;
-
-        return getOriginalBIP39Indices(words);
-    }
-
-    /**
-     * @dev **Convenience function:** Maps 12 individual standard BIP-39 indices to their
-     * corresponding custom words.
-     * Internally calls the array-based `getCustomWords` function.
-     * @return An array of 12 strings representing the custom words.
-     */
-    function getCustomWords12(
-        uint16 _idx1, uint16 _idx2, uint16 _idx3, uint16 _idx4,
-        uint16 _idx5, uint16 _idx6, uint16 _idx7, uint16 _idx8,
-        uint16 _idx9, uint16 _idx10, uint16 _idx11, uint16 _idx12
-    )
-        public
-        view
-        returns (string[] memory)
-    {
-        uint16[] memory indices = new uint16[](BIP39_LENGTH_12);
-        indices[0] = _idx1; indices[1] = _idx2; indices[2] = _idx3; indices[3] = _idx4;
-        indices[4] = _idx5; indices[5] = _idx6; indices[6] = _idx7; indices[7] = _idx8;
-        indices[8] = _idx9; indices[9] = _idx10; indices[10] = _idx11; indices[11] = _idx12;
-
-        return getCustomWords(indices);
     }
 
     /**
