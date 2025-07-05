@@ -143,3 +143,9 @@ deepstego/checkpoints/
 backend/temp/
 backend/output/
 backend/uploads/1751680282988-2e3981c2fcc7.mp4
+react-boilerplate/public/posters/original/.DS_Store
+react-boilerplate/.DS_Store
+*.webp
+react-boilerplate/public/.DS_Store
+react-boilerplate/public/posters/.DS_Store
+.DS_Store
