@@ -1,73 +1,98 @@
-# Hardhat 3 Alpha: `node:test` and `viem` example project
+# CustomBIP39WordResolver - Testing and Deployment
 
-> **WARNING**: This example project uses Hardhat 3, which is still in development. Hardhat 3 is not yet intended for production use.
+This directory contains test and deployment scripts for the `CustomBIP39WordResolver` smart contract using Hardhat 3.0.
 
-Welcome to the Hardhat 3 alpha version! This project showcases some of the changes and new features coming in Hardhat 3.
+## Contract Overview
 
-To learn more about the Hardhat 3 Alpha, please visit [its tutorial](https://hardhat.org/hardhat3-alpha). To share your feedback, join our [Hardhat 3 Alpha](https://hardhat.org/hardhat3-alpha-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new?template=hardhat-3-alpha.yml) in our GitHub issue tracker.
+The `CustomBIP39WordResolver` contract allows users to:
+- Send payments to the contract via the `pay()` function
+- Track payment balances
+- Allow the contract owner to withdraw accumulated funds
+- Emit `PaymentReceived` events for payment tracking
 
-## Project Overview
+## Test Files
 
-This example project includes:
+### TypeScript Tests (`test/CustomBIP39WordResolver.ts`)
+Uses Hardhat 3.0's viem integration for realistic blockchain simulation:
 
-- A simple Hardhat configuration file.
-- Foundry-compatible Solidity unit tests.
-- TypeScript integration tests using [`node:test`](nodejs.org/api/test.html), the new Node.js native test runner, and [`viem`](https://viem.sh/).
-- Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
+- **Deployment Test**: Verifies contract deploys successfully
+- **Payment Test**: Tests payment acceptance and event emission
+- **Withdrawal Test**: Tests owner withdrawal functionality
+- **Balance Tracking**: Tests multiple payments and balance tracking
 
-## Navigating the Project
-
-To get the most out of this example project, we recommend exploring the files in the following order:
-
-1. Read the `hardhat.config.ts` file, which contains the project configuration and explains multiple changes.
-2. Review the "Running Tests" section and explore the files in the `contracts/` and `test/` directories.
-3. Read the "Make a deployment to Sepolia" section and follow the instructions.
-
-Each file includes inline explanations of its purpose and highlights the changes and new features introduced in Hardhat 3.
-
-## Usage
-
-### Running Tests
-
-To run all the tests in the project, execute the following command:
-
-```shell
-npx hardhat test
-```
-
-You can also selectively run the Solidity or `node:test` tests:
-
-```shell
-npx hardhat test solidity
+Run TypeScript tests:
+```bash
 npx hardhat test nodejs
 ```
 
-### Make a deployment to Sepolia
+### Solidity Tests (`contracts/CustomBIP39WordResolver.t.sol`)
+Uses Foundry-style testing for fast, EVM-native unit tests:
 
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Sepolia.
+- **Initial State**: Verifies contract deployment
+- **Pay Function**: Tests payment acceptance
+- **Event Emission**: Tests PaymentReceived event
+- **Withdrawal**: Tests owner withdrawal
+- **Access Control**: Tests only-owner withdrawal restriction
+- **Multiple Payments**: Tests multiple user payments
+- **Fuzz Testing**: Tests with random payment amounts
 
-To run the deployment to a local chain:
-
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts
+Run Solidity tests:
+```bash
+npx hardhat test solidity
 ```
 
-To run the deployment to Sepolia, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `SEPOLIA_PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
+## Deployment Scripts
 
-You can set the `SEPOLIA_PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
+### Manual Deployment (`scripts/deploy_CustomBIP39WordResolver.ts`)
+Simple deployment script using viem:
 
-To set the `SEPOLIA_PRIVATE_KEY` config variable using `hardhat-keystore`:
-
-```shell
-npx hardhat keystore set SEPOLIA_PRIVATE_KEY
+```bash
+npx hardhat run scripts/deploy_CustomBIP39WordResolver.ts
 ```
 
-After setting the variable, you can run the deployment with the Sepolia network:
+### Ignition Deployment (`ignition/modules/CustomBIP39WordResolver.ts`)
+Declarative deployment using Hardhat Ignition:
 
-```shell
-npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
+```bash
+npx hardhat ignition deploy ignition/modules/CustomBIP39WordResolver.ts
 ```
 
----
+## Running All Tests
 
-Feel free to explore the project and provide feedback on your experience with Hardhat 3 Alpha!
+To run both TypeScript and Solidity tests:
+```bash
+npx hardhat test
+```
+
+## Contract Functions
+
+- `pay()` - Accepts payments and emits PaymentReceived event
+- `withdraw()` - Allows owner to withdraw all contract funds
+- `balances[address]` - Mapping to track user payment balances
+
+## Events
+
+- `PaymentReceived(address from, uint256 amount)` - Emitted when payment is received
+
+## Notes
+
+- The contract uses `msg.sender` for access control on withdrawal
+- All payments are tracked in the `balances` mapping
+- The contract can receive ETH via the `pay()` function
+- Only the contract owner can call `withdraw()`
+
+## MCP Demo Screenshots
+
+A set of demo screenshots is available in the [`hardhat-mcp-server/mcp-demo-screenshots`](../hardhat-mcp-server/mcp-demo-screenshots) folder. These images showcase the MCP server's UI and workflow, including contract deployment, payment flows, and batch processing features.
+
+**To view the screenshots:**
+- Open the `hardhat-mcp-server/mcp-demo-screenshots` directory in your file explorer.
+- Example files:
+    - `Screenshot 2025-07-06 at 1.21.34 AM.jpg`
+    - `Screenshot 2025-07-06 at 1.21.49 AM.jpg`
+    - `Screenshot 2025-07-06 at 1.21.57 AM.jpg`
+    - `Screenshot 2025-07-06 at 1.22.59 AM.jpg`
+    - `Screenshot 2025-07-06 at 1.23.20 AM.jpg`
+    - `Screenshot 2025-07-06 at 1.25.19 AM.jpg`
+
+These screenshots can be used for documentation, presentations, or to better understand the MCP server's capabilities and user interface.
