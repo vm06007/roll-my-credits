@@ -1,0 +1,262 @@
+@import @/styles/helpers
+
+.join
+    position: relative
+    overflow: hidden
+    margin-bottom: -100px
+    &:before,
+    &:after
+        content: ""
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%,-50%)
+        border-radius: 50%
+        border: 1px solid $n4
+    &:before
+        width: 660px
+        height: 660px
+        opacity: .1
+        +x
+            width: 536px
+            height: 536px
+    &:after
+        width: 888px
+        height: 888px
+        opacity: .12
+        +x
+            width: 722px
+            height: 722px
+
+.container
+    display: flex
+    justify-content: center
+    align-items: center
+    height: 1024px
+    text-align: center
+    +x
+        height: 800px
+
+.wrap
+    position: relative
+    z-index: 2
+
+.hackathonLogo
+    filter: invert(1)
+    transform: scale(1.3)
+    +m
+        transform: scale(1)
+
+.title
+    margin-bottom: 12px
+
+.info
+    margin-bottom: 24px
+    color: $n4
+    +m
+        font-size: 20px
+        line-height: 32px
+
+.avatars
+    display: flex
+    justify-content: center
+    margin-bottom: 24px
+    margin-left: 16px
+
+.avatar
+    position: relative
+    width: 60px
+    height: 60px
+    margin-left: -16px
+    border: 4px solid $n1
+    border-radius: 50%
+    overflow: hidden
+
+.image
+    position: absolute
+    font-size: 0
+    z-index: 1
+    &:nth-child(1)
+        left: calc(50% - 850px)
+        bottom: 170px
+        +x
+            left: calc(50% - 800px)
+            bottom: 20px
+        +m
+            display: none
+    &:nth-child(2)
+        top: 80px
+        left: calc(50% - 658px)
+        +x
+            left: calc(50% - 578px)
+        +d
+            left: calc(50% - 604px)
+        +m
+            display: none
+    &:nth-child(3)
+        top: 14px
+        right: calc(50% - 715px)
+        +x
+            top: 0
+            right: calc(50% - 635px)
+        +m
+            top: -10px
+            right: calc(50% - 303px)
+            width: 250px
+    &:nth-child(4)
+        right: calc(50% - 847px)
+        bottom: 113px
+        +x
+            right: calc(50% - 827px)
+            bottom: 0
+        +m
+            display: none
+    &:nth-child(5)
+        left: calc(50% - 310px)
+        bottom: 240px
+        +x
+            bottom: 125px
+        +m
+            left: 0
+            bottom: 165px
+    &:nth-child(6)
+        top: 140px
+        left: calc(50% - 217px)
+        +x
+            top: 30px
+        +m
+            left: 0
+    &:nth-child(7)
+        top: 244px
+        right: calc(50% - 215px)
+        +x
+            top: 135px
+        +m
+            display: none
+    &:nth-child(8)
+        right: calc(50% - 225px)
+        bottom: 113px
+        +x
+            right: calc(50% - 240px)
+            bottom: 107px
+        +m
+            right: calc(50% - 110px)
+            bottom: 140px
+    &:nth-child(9)
+        right: calc(50% - 510px)
+        bottom: 322px
+        +x
+            bottom: 205px
+
+// MetaMask Image Styles
+.metamaskImage
+    cursor: pointer
+    transition: transform 0.3s ease
+
+    &:hover
+        transform: scale(1.2)
+
+// MetaMask Modal Styles
+:global(.modal-container).metamaskModalContainer
+    max-width: 90vw
+    width: fit-content
+    min-width: 400px
+    +m
+        max-width: 95vw
+        min-width: 300px
+
+.metamaskModalContent
+    display: flex
+    flex-direction: column
+    align-items: center
+    gap: 20px
+    width: fit-content
+    padding: 20px
+
+.metamaskInterfaceImage
+    max-width: none
+    width: auto
+    height: auto
+    object-fit: contain
+    border-radius: 8px
+    filter: brightness(0.9)
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15)
+
+.galleryNavigation
+    display: flex
+    align-items: center
+    justify-content: space-between
+    width: 100%
+    max-width: 500px
+    padding: 0 20px
+    margin-top: 10px
+
+.navArrow
+    background: rgba(255, 255, 255, 0.9)
+    border: 2px solid #e1e5e9
+    border-radius: 50%
+    width: 50px
+    height: 50px
+    display: flex
+    align-items: center
+    justify-content: center
+    cursor: pointer
+    font-size: 24px
+    font-weight: bold
+    color: #333
+    transition: all 0.3s ease
+    user-select: none
+
+    &:hover
+        background: #fff
+        border-color: #007bff
+        color: #007bff
+        transform: scale(1.1)
+
+    &:active
+        transform: scale(0.95)
+
+.imageInfo
+    display: flex
+    flex-direction: column
+    align-items: center
+    gap: 5px
+    flex: 1
+    padding: 0 20px
+
+.imageTitle
+    font-size: 16px
+    font-weight: 600
+    color: #333
+    text-align: center
+
+.imageCounter
+    font-size: 14px
+    color: #666
+    text-align: center
+
+// Responsive design for mobile
+@media (max-width: 768px)
+    .metamaskModalContent
+        gap: 15px
+
+    .metamaskInterfaceImage
+        max-height: 60vh
+
+    .galleryNavigation
+        padding: 0 10px
+        max-width: 100%
+
+    .navArrow
+        width: 40px
+        height: 40px
+        font-size: 20px
+
+    .imageInfo
+        padding: 0 10px
+
+    .imageTitle
+        font-size: 14px
+
+    .imageCounter
+        font-size: 12px
