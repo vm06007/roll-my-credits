@@ -44,10 +44,10 @@ setTimeout(() => {
         method: 'tools/list',
         params: {}
     };
-    
+
     console.log('Sending tools/list request...');
     server.stdin.write(JSON.stringify(listToolsRequest) + '\n');
-    
+
     // Close after another delay
     setTimeout(() => {
         console.log('Closing server...');

@@ -16,7 +16,7 @@ server.stdout.on('data', (data) => {
         try {
             const response = JSON.parse(line);
             console.log('\n📥 Server response:', JSON.stringify(response, null, 2));
-            
+
             const resolver = pendingRequests.get(response.id);
             if (resolver) {
                 resolver(response);
@@ -42,7 +42,7 @@ function sendRequest(method, params = {}) {
             method,
             params
         };
-        
+
         console.log(`\n📤 Sending ${method} request...`);
         pendingRequests.set(id, resolve);
         server.stdin.write(JSON.stringify(request) + '\n');
@@ -101,10 +101,10 @@ async function runTests() {
 
         // Wait a bit for final responses
         await new Promise(resolve => setTimeout(resolve, 3000));
-        
+
         console.log('\n✅ All tests completed!');
         server.stdin.end();
-        
+
     } catch (error) {
         console.error('❌ Error:', error);
         server.stdin.end();
