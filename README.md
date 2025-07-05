@@ -15,6 +15,28 @@ Roll My Credits combines traditional steganography techniques with deep learning
 - **User-Friendly Interface**: React-based web app with intuitive encode/decode workflows
 - **Blockchain Integration**: Ethereum smart contract for decentralized word mapping
 
+## Visual Overview
+
+### Steganography Theory
+
+Understanding how information can be hidden in plain sight:
+
+![Basic Steganography Concept](theory/basic-stego.webp)
+
+*Basic steganography methodology - hiding data within digital media*
+
+### Real-World Use Cases
+
+Our steganography techniques can be applied to various scenarios where discrete information sharing is essential:
+
+#### Digital Privacy & Security
+![Visual Data Exposure](use-case-exmples/visual-exposure.jpg)
+*Example of visual data exposure vulnerabilities that steganography can help protect against*
+
+#### Secret Data Import/Export
+![Secret Image Import](use-case-exmples/import-secret-image.jpg)
+*Importing sensitive data through seemingly innocent image files*
+
 ## Tech Stack
 
 ### Frontend

@@ -17,11 +17,15 @@ type DemoAProps = {
 };
 
 const DemoA = ({ scrollToRef }: DemoAProps) => {
+
     const [activeTab, setActiveTab] = useState<string>("encode_poster");
 
     // Static data that components might need
     const movies = [
-        "Pulp Fiction", "Taxi Driver", "Apocalypse Now", "The Piano", "Amour"
+        "Pulp Fiction",
+        "Taxi Driver",
+        "Apocalypse Now",
+        "Amour"
     ];
 
     const styles_options = ["Original Style", "Ghibli Style", "Minimalistic Style"];

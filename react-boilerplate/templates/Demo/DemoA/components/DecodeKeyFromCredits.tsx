@@ -65,7 +65,7 @@ const DecodeKeyFromCredits = () => {
             if (result.success) {
                 setDecodedMessage(result.message);
                 showToast("Message revealed successfully!", 'success');
-                
+
                 // Video steganography doesn't have these settings yet, so we'll keep this simple
                 setRecoverySettings({
                     passwordProtected: false,
@@ -184,7 +184,7 @@ const DecodeKeyFromCredits = () => {
                                                     Password Protected - {recoverySettings.passwordProtected ? "Yes" : "No"}
                                                 </div>
                                                 <div className={styles.settingBox}>
-                                                    Require World ID - {recoverySettings.requireWorldID ? "Yes" : "No"}
+                                                    Require Payment - {recoverySettings.requireWorldID ? "Yes" : "No"}
                                                 </div>
                                                 {recoverySettings.duressMode && (
                                                     <div className={styles.settingBox}>

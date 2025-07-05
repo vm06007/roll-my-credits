@@ -17,6 +17,7 @@ const DecodeKeyFromPoster = () => {
     const [passwordInput, setPasswordInput] = useState("");
     const [showPasswordInput, setShowPasswordInput] = useState(false);
     const [toasts, setToasts] = useState<ToastMessage[]>([]);
+    const [requirePayment, setRequirePayment] = useState(false);
 
     const showToast = (message: string, type: ToastMessage['type'] = 'error') => {
         const id = Date.now().toString();
@@ -184,20 +185,19 @@ const DecodeKeyFromPoster = () => {
                                         <div className={styles.recoverySettings}>
                                             <h4 className={styles.recoveryTitle}>Recover Settings</h4>
                                             <div className={styles.settingsGrid}>
-                                                <div className={styles.settingBox}>
-                                                    Password Protected - {recoverySettings.passwordProtected ? "Yes" : "No"}
+                                            <div className={styles.settingBox}>
+                                                    Require Password - {recoverySettings.requireWorldID ? "Yes" : "No"}
                                                 </div>
-                                                <div className={styles.settingBox}>
-                                                    Require World ID - {recoverySettings.requireWorldID ? "Yes" : "No"}
+                                                <div
+                                                    className={styles.settingBox}
+                                                    style={{ cursor: 'pointer', userSelect: 'none' }}
+                                                    onClick={() => setRequirePayment((v) => !v)}
+                                                >
+                                                    Require Payment - {requirePayment ? "Yes" : "No"}
                                                 </div>
                                                 {recoverySettings.duressMode && (
                                                     <div className={styles.settingBox}>
                                                         Duress Mode - Yes
-                                                    </div>
-                                                )}
-                                                {recoverySettings.requirePayment && (
-                                                    <div className={styles.settingBox}>
-                                                        Require Payment - Yes
                                                     </div>
                                                 )}
                                             </div>
@@ -212,12 +212,31 @@ const DecodeKeyFromPoster = () => {
                                                 {decodedWords.map((word, index) => (
                                                     <div key={index} className={styles.decodedWordItem}>
                                                         <span className={styles.wordNumber}>{index + 1}.</span>
-                                                        <span className={styles.wordText}>{word}</span>
+                                                        <span
+                                                            className={styles.wordText}
+                                                            style={requirePayment ? { filter: 'blur(6px)' } : {}}
+                                                        >
+                                                            {word}
+                                                        </span>
                                                     </div>
                                                 ))}
                                             </div>
                                         ) : (
-                                            <div className={styles.decodedText}>{decodedMessage}</div>
+                                            <div
+                                                className={styles.decodedText}
+                                                style={requirePayment ? { filter: 'blur(8px)' } : {}}
+                                            >
+                                                {decodedMessage}
+                                            </div>
+                                        )}
+                                        {requirePayment && (
+                                            <button
+                                                className={styles.button}
+                                                style={{ marginTop: 16 }}
+                                                onClick={() => alert('Payment flow would go here!')}
+                                            >
+                                                Maybe Payment
+                                            </button>
                                         )}
                                     </div>
                                 </div>

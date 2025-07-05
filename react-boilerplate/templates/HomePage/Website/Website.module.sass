@@ -1,0 +1,223 @@
+@import @/styles/helpers
+
+.website
+    position: relative
+
+.anchor
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+
+.bigger
+    font-size: 16px
+    border-color: $n1
+    &:hover
+        color: white
+
+.container
+    display: flex
+    align-items: center
+    +d
+        display: block
+
+.wrap
+    max-width: 336px
+    margin-right: auto
+    +d
+        max-width: 420px
+        margin: 0 0 48px 0
+
+.title
+    margin-bottom: 16px
+    +m
+        max-width: 390px
+
+.info
+    margin-bottom: 48px
+    color: $n4
+    +x
+        font-size: 20px
+    +d
+        margin-bottom: 32px
+    +m
+        max-width: 320px
+        font-size: 18px
+        line-height: 28px
+
+.inlineLink
+    background: none
+    border: none
+    padding: 0
+    margin: 0
+    font: inherit
+    color: inherit
+    text-decoration: underline
+    cursor: pointer
+    transition: opacity 0.2s ease
+    &:hover
+        opacity: 0.8
+
+.form
+    +d
+        max-width: 340px
+    +m
+        max-width: 100%
+
+.preview,
+.previewDesktop,
+.previewMobile
+    text-align: center
+    font-size: 0
+
+.preview
+    +x
+        max-width: 580px
+    +d
+        max-width: 100%
+    +d
+        display: none
+
+.previewDesktop
+    display: none
+    +d
+        display: block
+    +m
+        display: none
+
+.previewMobile
+    display: none
+    +m
+        display: block
+
+// Resources Modal Styles
+.resourcesModalContainer
+    max-width: 800px
+    width: 100%
+    +m
+        max-width: 95vw
+
+.resourcesModalContent
+    padding: 32px
+    background: $n1
+    border-radius: 16px
+    display: flex
+    flex-direction: column
+    gap: 24px
+    +m
+        padding: 24px
+        gap: 20px
+
+.resourcesHeader
+    text-align: center
+    border-bottom: 1px solid $n3
+    padding-bottom: 24px
+    +m
+        padding-bottom: 20px
+
+.resourcesTitle
+    color: $n7
+    margin: 0 0 12px 0
+    font-size: 24px
+    font-weight: 600
+    +m
+        font-size: 20px
+
+.resourcesSubtitle
+    color: $n4
+    margin: 0
+    font-size: 16px
+    line-height: 1.5
+    +m
+        font-size: 14px
+
+.resourcesList
+    display: flex
+    flex-direction: column
+    gap: 20px
+    max-height: 60vh
+    overflow-y: auto
+    padding-right: 8px
+    +m
+        gap: 16px
+        padding-right: 4px
+
+.resourceItem
+    display: flex
+    align-items: flex-start
+    gap: 20px
+    padding: 20px
+    background: rgba(255, 255, 255, 0.05)
+    border: 1px solid rgba(255, 255, 255, 0.1)
+    border-radius: 12px
+    transition: all 0.2s ease
+    +m
+        flex-direction: column
+        gap: 16px
+        padding: 16px
+    &:hover
+        background: rgba(255, 255, 255, 0.08)
+        border-color: rgba(255, 255, 255, 0.2)
+
+.resourceInfo
+    flex: 1
+    min-width: 0
+
+.resourceType
+    display: inline-block
+    background: $blue
+    color: white
+    padding: 4px 8px
+    border-radius: 4px
+    font-size: 11px
+    font-weight: 600
+    text-transform: uppercase
+    letter-spacing: 0.5px
+    margin-bottom: 8px
+
+.resourceTitle
+    color: $n7
+    margin: 0 0 8px 0
+    font-size: 16px
+    font-weight: 600
+    line-height: 1.3
+    +m
+        font-size: 15px
+
+.resourceDescription
+    color: $n4
+    margin: 0
+    font-size: 14px
+    line-height: 1.4
+    +m
+        font-size: 13px
+
+.resourceButtons
+    display: flex
+    flex-direction: column
+    gap: 8px
+    flex-shrink: 0
+    +m
+        width: 100%
+
+.resourceButton
+    background: $blue
+    color: white
+    border: 1px solid $blue
+    padding: 10px 16px
+    font-size: 14px
+    font-weight: 500
+    border-radius: 8px
+    cursor: pointer
+    transition: all 0.2s ease
+    flex-shrink: 0
+    white-space: nowrap
+    min-width: 100px
+    height: 40px
+    +m
+        width: 100%
+        justify-content: center
+    &:hover
+        background: lighten($blue, 10%)
+        border-color: lighten($blue, 10%)
+        transform: translateY(-1px)

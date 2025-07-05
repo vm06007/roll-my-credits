@@ -1,0 +1,212 @@
+// Form-related styles for DemoA
+@import ./mixins
+
+.inputModeSelectContainer
+    display: flex
+    justify-content: space-between
+    align-items: center
+    margin-bottom: 16px
+    gap: 20px
+    +m
+        flex-direction: column
+        align-items: flex-start
+        gap: 16px
+
+.inputModeSelect
+    display: flex
+    align-items: center
+    gap: 20px
+    label
+        display: flex
+        align-items: center
+        gap: 8px
+        cursor: pointer
+        +body
+
+.uploadMethodSelectContainer
+    display: flex
+    justify-content: space-between
+    align-items: center
+    margin-bottom: 16px
+    gap: 20px
+    min-height: 40px
+    +m
+        flex-direction: column
+        align-items: flex-start
+        gap: 16px
+
+.uploadMethodSelect
+    display: flex
+    gap: 20px
+    label
+        display: flex
+        align-items: center
+        gap: 8px
+        cursor: pointer
+        +body
+
+.seedInput
+    @include demo-input-base
+    width: 100%
+    resize: vertical
+    margin-bottom: 16px
+
+.passwordInput
+    @include demo-input-base
+    width: 100%
+
+.passwordSection
+    margin-top: 16px
+    width: 100%
+
+.hiddenInput
+    color: transparent !important
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5)
+    filter: blur(2px)
+    transition: all 0.3s ease
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.02) 75%), linear-gradient(45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.02) 75%)
+    background-size: 8px 8px
+    background-position: 0 0, 4px 4px
+    border-color: rgba(255, 255, 255, 0.3) !important
+    &::placeholder
+        color: transparent
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.3)
+
+.wordGrid
+    @include demo-grid-responsive(3, 2, 2)
+    margin-bottom: 16px
+
+.wordInput
+    display: flex
+    align-items: center
+    gap: 4px
+    span
+        font-size: 14px
+        color: $n4
+        min-width: 20px
+        margin-left: 4px
+    input
+        @include demo-input-base
+        flex: 1
+        padding: 8px 12px
+        border-radius: 6px
+
+.uploadArea
+    @include demo-upload-area
+
+.dropdownSection
+    display: flex
+    gap: 12px
+    margin-bottom: 16px
+    height: 50px
+    align-items: flex-start
+    +m
+        flex-direction: column
+        min-height: auto
+
+.dropdown
+    @include demo-dropdown-base
+    flex: 1
+    font-size: 15px
+    font-weight: 600
+    height: 55px
+
+    optgroup
+        background: $n2
+        color: $n7
+        font-weight: 700
+        font-size: 14px
+        padding: 8px 12px
+        margin: 4px 0
+
+    option
+        background: $n1
+        color: $n7
+        padding: 8px 12px
+        font-weight: 500
+        &:hover
+            background: $n2
+
+.wordTypeDropdown
+    @include demo-dropdown-base
+    min-width: 120px
+
+.styleFilterDropdown
+    @include demo-dropdown-base
+    background: $n2
+    min-width: 160px
+    padding: 8px 32px 8px 12px
+    background-position: right 12px center
+    background-size: 14px
+    transition: border-color 0.2s ease
+    +m
+        min-width: 120px
+        font-size: 13px
+    &:hover
+        border-color: rgba(255, 255, 255, 0.4)
+
+.wordsModeLabel
+    display: flex
+    align-items: center
+    gap: 12px
+
+.button
+    @include demo-button-base
+    margin-bottom: 32px
+
+.headerButton
+    @include demo-button-base
+    padding: 8px 16px
+    font-size: 14px
+    min-width: auto
+    white-space: nowrap
+
+.cardButton
+    @include demo-button-base
+    width: 100%
+    margin-top: auto
+
+.columnButton
+    @include demo-button-base
+    flex: 1
+    max-width: calc(50% - 12px)
+    +m
+        max-width: 100%
+
+.saveSettingsButton
+    @include demo-button-base
+    padding: 12px 24px
+    font-size: 14px
+    min-width: auto
+    +m
+        width: 100%
+
+.iconButton
+    @include demo-button-icon
+
+.generationIcons
+    display: flex
+    gap: 12px
+    align-items: center
+    +m
+        align-self: flex-end
+
+.libraryIconContainer
+    display: flex
+    align-items: center
+    justify-content: center
+    gap: 12px
+    min-width: 40px
+    min-height: 40px
+    +m
+        align-self: flex-end
+
+.buttonRow
+    @include demo-flex-responsive
+    margin-top: 24px
+
+.toggleSwitch
+    @include demo-toggle-switch
+
+.disabled
+    @include demo-disabled-state 
