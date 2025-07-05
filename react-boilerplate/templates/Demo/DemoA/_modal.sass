@@ -1,0 +1,153 @@
+// Modal-related styles for DemoA
+@import ./mixins
+
+.modalOverlay
+    @include demo-modal-overlay
+
+.modalContent
+    @include demo-modal-content
+
+.modalHeader
+    @include demo-modal-header
+
+.modalHeaderActions
+    display: flex
+    align-items: center
+    gap: 16px
+    +m
+        gap: 12px
+
+.modalTitle
+    color: $n7
+    margin: 0
+    font-size: 20px
+    font-weight: 600
+
+.modalClose
+    background: none
+    border: none
+    color: $n4
+    font-size: 24px
+    cursor: pointer
+    padding: 4px
+    border-radius: 4px
+    transition: all 0.2s ease
+    &:hover
+        color: $n7
+        background: $n2
+
+.posterGrid
+    @include demo-poster-grid
+    padding: 24px
+    max-height: 60vh
+    overflow-y: auto
+    +m
+        padding: 16px
+
+.posterItem
+    cursor: pointer
+    border-radius: 12px
+    overflow: hidden
+    background: $n2
+    height: 400px
+    transition: all 0.2s ease
+    border: 2px solid transparent
+    position: relative
+    &:hover
+        transform: translateY(-4px)
+        border-color: $blue
+        box-shadow: 0 8px 25px rgba(0, 123, 255, 0.2)
+    &.imageFallback
+        &::before
+            content: "🎬"
+            position: absolute
+            top: 50%
+            left: 50%
+            transform: translate(-50%, -50%)
+            font-size: 48px
+            z-index: 1
+
+.posterImage
+    width: 100%
+    height: 310px
+    object-fit: cover
+    +m
+        height: 150px
+
+.posterInfo
+    padding: 12px
+    +m
+        padding: 8px
+
+.posterMovie
+    color: $n7
+    font-size: 14px
+    font-weight: 600
+    margin-bottom: 4px
+
+.posterStyle
+    color: $n4
+    font-size: 12px
+    text-transform: capitalize
+
+// Settings Modal Styles
+.settingsModalContent
+    @include demo-modal-content
+    max-width: 600px
+    max-height: 85vh
+    +m
+        max-width: 95vw
+        max-height: 90vh
+
+.settingsBody
+    padding: 24px
+    max-height: 60vh
+    overflow-y: auto
+    padding-top: 0px
+    padding-bottom: 0px
+    +m
+        padding: 16px
+
+.settingItem
+    display: flex
+    justify-content: space-between
+    align-items: flex-start
+    gap: 16px
+    padding: 24px 0
+    border-bottom: 1px solid $n3
+    &:last-child
+        border-bottom: none
+    +m
+        flex-direction: column
+        align-items: flex-start
+        gap: 12px
+        padding: 16px 0
+
+.settingInfo
+    flex: 1
+    +m
+        width: 100%
+
+.settingTitle
+    color: $n7
+    margin: 0 0 8px 0
+    font-size: 16px
+    font-weight: 600
+    +m
+        font-size: 15px
+
+.settingDescription
+    color: $n4
+    margin: 0
+    font-size: 14px
+    line-height: 1.4
+    +m
+        font-size: 13px
+
+.settingsFooter
+    padding: 24px
+    border-top: 1px solid $n3
+    display: flex
+    justify-content: flex-end
+    +m
+        padding: 16px 

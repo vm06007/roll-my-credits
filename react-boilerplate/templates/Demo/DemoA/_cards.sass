@@ -1,0 +1,214 @@
+// Card and layout-related styles for DemoA
+@import ./mixins
+
+.section
+    @include demo-card-section
+
+.wrap
+    width: 100%
+    @include demo-section-spacing
+
+.cardsSection
+    @include demo-flex-responsive
+
+.imageCard
+    @include demo-card-base
+    flex: 1
+
+.cardContent
+    display: flex
+    flex-direction: column
+    height: 100%
+
+.cardHeader
+    display: flex
+    justify-content: space-between
+    align-items: center
+    margin-bottom: 24px
+    gap: 16px
+
+.cardTitle
+    color: $n7
+    margin: 0
+    font-size: 24px
+    font-weight: 600
+    flex: 1
+
+.cardDescription
+    color: $n4
+    margin: 0 0 24px
+    font-size: 18px
+    line-height: 28px
+
+.headerActions
+    display: flex
+    align-items: center
+    gap: 12px
+    +m
+        gap: 8px
+
+.imagePreviewArea
+    @include demo-image-preview
+    margin-bottom: 24px
+
+.cardImage
+    width: 100%
+    height: 100%
+    object-fit: cover
+    border-radius: 10px
+
+.comparisonSection
+    @include demo-flex-responsive
+    margin-top: 32px
+
+.imageColumn
+    flex: 1
+
+.columnTitle
+    color: $n1
+    margin: 0 0 16px
+    font-size: 16px
+    font-weight: 600
+
+.imagePlaceholder
+    @include demo-image-preview
+    border: 2px dashed rgba(255, 255, 255, 0.3)
+    background: rgba(0, 0, 0, 0.1)
+
+.placeholderContent
+    @include demo-image-placeholder
+
+.placeholderImage
+    width: 100%
+    height: 100%
+    display: flex
+    align-items: center
+    justify-content: center
+    background: $n2
+    color: $n4
+    font-size: 14px
+    border-radius: 16px
+
+.previewImage
+    width: 100%
+    height: 100%
+    object-fit: cover
+    border-radius: 10px
+
+.resultImage
+    width: 100%
+    height: 100%
+    object-fit: cover
+    border-radius: 16px
+
+.preview
+    position: relative
+    margin: 32px -32px -16px -32px
+    border-radius: 16px
+    overflow: hidden
+    height: 300px
+    +m
+        margin: 32px -16px -16px -16px
+        height: 250px
+
+.decodedResult
+    width: 100%
+    height: 100%
+    padding: 24px
+    background: transparent
+    display: flex
+    flex-direction: column
+    gap: 24px
+    +m
+        padding: 16px
+        gap: 20px
+
+.recoverySettings
+    width: 100%
+
+.recoveryTitle
+    color: $n7
+    margin: 0 0 16px 0
+    font-size: 18px
+    font-weight: 600
+    text-align: center
+    +m
+        font-size: 16px
+
+.settingsGrid
+    display: flex
+    flex-direction: column
+    gap: 12px
+    +m
+        gap: 10px
+
+.settingBox
+    background: rgba(255, 255, 255, 0.05)
+    border: 1px solid rgba(255, 255, 255, 0.1)
+    border-radius: 8px
+    padding: 12px 16px
+    color: $n7
+    font-size: 14px
+    font-weight: 500
+    text-align: center
+    +m
+        padding: 10px 12px
+        font-size: 13px
+
+.recoveredKeySection
+    width: 100%
+
+.recoveredKeyTitle
+    color: $n7
+    margin: 0 0 20px 0
+    font-size: 18px
+    font-weight: 600
+    text-align: center
+    +m
+        font-size: 16px
+        margin: 0 0 16px 0
+
+.decodedWordsGrid
+    @include demo-grid-responsive(3, 2, 2)
+    width: 100%
+
+.decodedWordItem
+    display: flex
+    align-items: center
+    gap: 8px
+    background: rgba(255, 255, 255, 0.05)
+    border: 1px solid rgba(255, 255, 255, 0.1)
+    border-radius: 6px
+    padding: 8px 12px
+    +m
+        gap: 6px
+        padding: 6px 10px
+
+.wordNumber
+    font-size: 12px
+    color: $n4
+    min-width: 16px
+    font-weight: 500
+    +m
+        font-size: 11px
+
+.wordText
+    flex: 1
+    color: $n7
+    font-size: 13px
+    font-weight: 500
+    +m
+        font-size: 12px
+
+.decodedText
+    color: $n7
+    font-size: 14px
+    line-height: 1.6
+    background: rgba(255, 255, 255, 0.05)
+    border: 1px solid rgba(255, 255, 255, 0.1)
+    border-radius: 8px
+    padding: 16px
+    word-break: break-word
+    +m
+        font-size: 13px
+        padding: 12px 

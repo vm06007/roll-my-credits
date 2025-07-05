@@ -1,0 +1,73 @@
+// Toast notification styles for DemoA
+@import ./mixins
+
+.toastContainer
+    position: fixed
+    top: 20px
+    right: 20px
+    z-index: 10000
+    display: flex
+    flex-direction: column
+    gap: 12px
+    pointer-events: none
+    +m
+        top: 10px
+        right: 10px
+        left: 10px
+
+.toast
+    background: $n1
+    border-radius: 12px
+    padding: 16px
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3)
+    border: 1px solid rgba(255, 255, 255, 0.1)
+    backdrop-filter: blur(10px)
+    -webkit-backdrop-filter: blur(10px)
+    pointer-events: auto
+    cursor: pointer
+    transition: all 0.3s ease
+    animation: slideInRight 0.3s ease-out
+    max-width: 400px
+    min-width: 300px
+    display: flex
+    align-items: center
+    gap: 12px
+    +m
+        min-width: auto
+        max-width: none
+        margin: 0
+        gap: 10px
+    &:hover
+        transform: translateY(-2px)
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4)
+
+.toast-error
+    border-left: 4px solid #ff4757
+    background: linear-gradient(135deg, rgba(255, 71, 87, 0.1) 0%, $n1 100%)
+
+.toast-warning
+    border-left: 4px solid #ffa502
+    background: linear-gradient(135deg, rgba(255, 165, 2, 0.1) 0%, $n1 100%)
+
+.toast-success
+    border-left: 4px solid #2ed573
+    background: linear-gradient(135deg, rgba(46, 213, 115, 0.1) 0%, $n1 100%)
+
+.toast-info
+    border-left: 4px solid #3742fa
+    background: linear-gradient(135deg, rgba(55, 66, 250, 0.1) 0%, $n1 100%)
+
+.toastContent
+    flex: 1
+    color: $n7
+    font-size: 14px
+    line-height: 1.4
+    font-weight: 500
+
+@keyframes slideInRight
+    from
+        transform: translateX(100%)
+        opacity: 0
+    to
+        transform: translateX(0)
+        opacity: 1 
