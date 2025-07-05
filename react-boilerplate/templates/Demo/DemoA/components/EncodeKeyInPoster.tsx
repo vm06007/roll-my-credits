@@ -281,7 +281,7 @@ const EncodeKeyInPoster = ({
     // Available styles with display names and folder paths
     const styleOptions = [
         { title: "Official Poster", folder: "original", extension: ".jpg" },
-        { title: "Ghibli Style Poster", folder: "ghibli", extension: ".png" },
+        { title: "Ghibli Style Poster", folder: "ghibli", extension: ".jpg" },
         { title: "Minimalistic Style Poster", folder: "minimal", extension: ".jpg" },
     ];
 
