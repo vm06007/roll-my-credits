@@ -34,8 +34,10 @@ Our steganography techniques can be applied to various scenarios where discrete 
 *Example of visual data exposure vulnerabilities that steganography can help protect against*
 
 #### Secret Data Import/Export
-![Secret Image Import](use-case-exmples/import-secret-image.jpg)
-*Importing sensitive data through seemingly innocent image files*
+
+| ![Secret Image Import](use-case-exmples/import-secret-image.jpg) | ![Secret Image Reveal](use-case-exmples/reveal-secret-image.png) |
+|:---------------------------------------------------------------:|:---------------------------------------------------------------:|
+| *Importing sensitive data through seemingly innocent image files* | *Revealing hidden secrets from a steganographic image file* |
 
 ## MCP Server for Steganography Workflows
 
