@@ -40,9 +40,15 @@ const Plugins = ({}: PluginsProps) => (
                                     styles.invert,
                                     styles.bigger
                                 )}
-                                onClick={() => console.log(`Open repository for ${item.title}`)}
+                                onClick={() => {
+                                    if (item.repo) {
+                                        window.open(item.repo, "_blank");
+                                    } else {
+                                        console.log(`Open repository for ${item.title}`);
+                                    }
+                                }}
                             >
-                                Open Repository
+                                {item.buttonLabel ? item.buttonLabel : "Open Repository"}
                             </button>
                         </div>
                     </div>
