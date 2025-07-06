@@ -40,6 +40,10 @@ app.get('/health', (req, res) => {
   res.json({ status: 'healthy' });
 });
 
+app.get('/', (req, res) => {
+  res.send('hello ETHGlobal');
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
