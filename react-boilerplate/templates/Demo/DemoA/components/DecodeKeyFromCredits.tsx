@@ -18,6 +18,8 @@ const DecodeKeyFromCredits = () => {
     const [showPasswordInput, setShowPasswordInput] = useState(false);
     const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
+    const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
     const showToast = (message: string, type: ToastMessage['type'] = 'error') => {
         const id = Date.now().toString();
         const newToast: ToastMessage = { id, message, type };
@@ -56,7 +58,7 @@ const DecodeKeyFromCredits = () => {
         formData.append("video", selectedFile);
 
         try {
-            const response = await fetch("http://localhost:3001/api/video-steganography/decode", {
+            const response = await fetch(`${BACKEND_URL}/api/video-steganography/decode`, {
                 method: "POST",
                 body: formData,
             });

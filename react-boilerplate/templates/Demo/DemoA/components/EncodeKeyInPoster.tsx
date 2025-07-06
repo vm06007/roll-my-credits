@@ -186,15 +186,16 @@ const EncodeKeyInPoster = ({
 
         formData.append("message", phrase);
 
+        const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
         try {
-            const response = await fetch("http://localhost:3001/api/steganography/encode", {
+            const response = await fetch(`${BACKEND_URL}/api/steganography/encode`, {
                 method: "POST",
                 body: formData,
             });
 
             const result = await response.json();
             if (result.success) {
-                setEncodedImage(`http://localhost:3001${result.url}`);
+                setEncodedImage(`${BACKEND_URL}${result.url}`);
                 showToast("Message encoded successfully!", 'success');
             } else {
                 showToast("Encoding failed. Please try again.", 'error');

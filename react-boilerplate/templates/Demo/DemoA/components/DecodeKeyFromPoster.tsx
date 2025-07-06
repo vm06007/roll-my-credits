@@ -30,6 +30,8 @@ declare global {
     }
 }
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 const DecodeKeyFromPoster = () => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [isDecoding, setIsDecoding] = useState(false);
@@ -83,7 +85,7 @@ const DecodeKeyFromPoster = () => {
         formData.append("image", selectedFile);
 
         try {
-            const response = await fetch("http://localhost:3001/api/steganography/decode", {
+            const response = await fetch(`${BACKEND_URL}/api/steganography/decode`, {
                 method: "POST",
                 body: formData,
             });

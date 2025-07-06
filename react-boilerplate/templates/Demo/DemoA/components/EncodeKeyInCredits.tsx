@@ -53,6 +53,8 @@ const EncodeKeyInCredits = ({
         { title: "Cannes Festival Credits", filename: "cannes_festival_credits.mp4" }
     ];
 
+    const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
     const showToast = (message: string, type: ToastMessage['type'] = 'error') => {
         const id = Date.now().toString();
         const newToast: ToastMessage = { id, message, type };
@@ -175,7 +177,7 @@ const EncodeKeyInCredits = ({
         }
 
         try {
-            const response = await fetch("http://localhost:3001/api/video-steganography/encode", {
+            const response = await fetch(`${BACKEND_URL}/api/video-steganography/encode`, {
                 method: "POST",
                 body: formData,
             });
@@ -183,7 +185,7 @@ const EncodeKeyInCredits = ({
             const result = await response.json();
             if (result.success) {
                 // Create download URL for the encoded video
-                const videoUrl = `http://localhost:3001${result.url}`;
+                const videoUrl = `${BACKEND_URL}${result.url}`;
                 setEncodedImage(videoUrl);
                 showToast(`Video processed successfully! Hidden message in ${result.framesUsed}/${result.totalFrames} frames.`, 'success');
             } else {
