@@ -117,15 +117,16 @@ const Main = ({ scrollToRef }: MainProps) => {
             >
                 <div className={styles.videoWrapper}>
                     <div className={styles.videoContainer}>
-                        <iframe
+                        <video
                             width="800"
                             height="450"
-                            src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=your_params"
-                            title="Roll The Credits Demo"
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowFullScreen
-                        ></iframe>
+                            controls
+                            autoPlay
+                            style={{ borderRadius: '12px', background: '#000' }}
+                        >
+                            <source src="/video/medium.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
                 </div>
             </Modal>

@@ -49,6 +49,14 @@ Below is a screenshot of the Hardhat MCP server being used in a real workflow. T
 
 *Example: The MCP server interface displaying available tools and a successful contract deployment.*
 
+## 🛠️ Available Actions & Tools
+
+Below are two key interface views showing the available actions and tools in the MCP server:
+
+| ![Available Actions](mcp-demo-screenshots/Screenshot%202025-07-06%20at%201.23.20%E2%80%AFAM.jpg) | ![Tool List](mcp-demo-screenshots/Screenshot%202025-07-06%20at%201.22.59%E2%80%AFAM.jpg) |
+|:-------------------------------------------------------------:|:----------------------------------------------------------:|
+| **Available Actions:**<br>Shows the main menu where you can start a Hardhat node, compile contracts, run tests, deploy, and interact with the blockchain. This is the entry point for all major development and testing operations. | **Tool List:**<br>Displays the full list of tools and commands supported by the MCP server, including contract management, network operations, testing, deployment, and blockchain interaction. |
+
 ---
 
 ## Prerequisites
