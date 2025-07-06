@@ -91,6 +91,11 @@
         content: ""
         display: block
         padding-bottom: 96.73%
+    img
+        transition: transform 0.3s cubic-bezier(0.4,0,0.2,1)
+        will-change: transform
+    &:hover img
+        transform: scale(1.1)
 
 .name
     +m
