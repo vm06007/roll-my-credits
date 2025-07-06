@@ -2,7 +2,7 @@
   "name": "roll-the-credits-template",
   "version": "0.1.0",
   "engines": {
-    "node": "14.18.1"
+    "node": "22.x"
   },
   "private": true,
   "scripts": {
