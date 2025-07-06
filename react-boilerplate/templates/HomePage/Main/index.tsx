@@ -14,6 +14,7 @@ type MainProps = {
 const Main = ({ scrollToRef }: MainProps) => {
     const [isVideoModalVisible, setIsVideoModalVisible] = useState(false);
     const [isMetaMaskModalVisible, setIsMetaMaskModalVisible] = useState(false);
+    const [metaMaskModalIndex, setMetaMaskModalIndex] = useState(0);
 
     const handleWatchDemo = () => {
         setIsVideoModalVisible(true);
@@ -24,6 +25,12 @@ const Main = ({ scrollToRef }: MainProps) => {
     };
 
     const handleTheaterMasksClick = () => {
+        setMetaMaskModalIndex(0);
+        setIsMetaMaskModalVisible(true);
+    };
+
+    const handleMetaMaskItemClick = () => {
+        setMetaMaskModalIndex(1); // Focus on slide #2 (index 1)
         setIsMetaMaskModalVisible(true);
     };
 
@@ -83,9 +90,9 @@ const Main = ({ scrollToRef }: MainProps) => {
                                     <img
                                         src={`/images/item-${x}.png`}
                                         alt="Theater Masks"
-                                        onClick={handleTheaterMasksClick}
+                                        onClick={handleMetaMaskItemClick}
                                         style={{ cursor: 'pointer' }}
-                                        title="Click to see theater masks steganography"
+                                        title="Click to see MetaMask modal (slide 2)"
                                     />
                                 ) : (
                                     <img src={`/images/item-${x}.png`} alt="Hero" />
@@ -122,6 +129,11 @@ const Main = ({ scrollToRef }: MainProps) => {
                     </div>
                 </div>
             </Modal>
+            <MetaMaskModal
+                visible={isMetaMaskModalVisible}
+                onClose={handleCloseMetaMaskModal}
+                startingIndex={metaMaskModalIndex}
+            />
         </div>
     );
 };

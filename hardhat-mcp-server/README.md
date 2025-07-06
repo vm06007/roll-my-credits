@@ -45,7 +45,7 @@ A Model Context Protocol (MCP) server that provides Hardhat 3 development capabi
 
 Below is a screenshot of the Hardhat MCP server being used in a real workflow. The UI shows contract deployment, test execution, and blockchain interaction tools available to LLM assistants and developers:
 
-![MCP Demo Screenshot](mcp-demo-screenshots/Screenshot%202025-07-06%20at%201.21.34%E2%80%AFAM.jpg)
+![MCP Demo Screenshot](mcp-demo-screenshots/Screenshot%202025-07-06%20at%201.25.19%E2%80%AFAM.jpg)
 
 *Example: The MCP server interface displaying available tools and a successful contract deployment.*
 

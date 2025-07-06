@@ -281,6 +281,7 @@ const EncodeKeyInPoster = ({
         other: [
             { title: "Alien", filename: "alien" },
             { title: "Aliens", filename: "aliens" },
+            { title: "Avatar", filename: "avatar" },
             { title: "Matrix", filename: "matrix" },
             { title: "The Pianist", filename: "the-pianist" },
             { title: "Titanic", filename: "titanic" },
