@@ -53,7 +53,7 @@ const EncodeKeyInCredits = ({
         { title: "Cannes Festival Credits", filename: "cannes_festival_credits.mp4" }
     ];
 
-    const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://credit-bb-gn8u3.ondigitalocean.app";
 
     const showToast = (message: string, type: ToastMessage['type'] = 'error') => {
         const id = Date.now().toString();
