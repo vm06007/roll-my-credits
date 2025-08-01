@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@n8tb1t/use-scroll-position": "^2.0.3",
-    "@shelf/react-outside-click": "^3.4.2",
+    "@shelf/react-outside-click": "^0.1.4",
     "@types/react-scroll": "^1.8.3",
     "@types/react-transition-group": "^4.4.5",
     "@types/scroll-lock": "^2.1.0",
