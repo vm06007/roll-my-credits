@@ -30,7 +30,7 @@ declare global {
     }
 }
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://credit-bb-gn8u3.ondigitalocean.app";
 
 const DecodeKeyFromPoster = () => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
