@@ -186,7 +186,7 @@ const EncodeKeyInPoster = ({
 
         formData.append("message", phrase);
 
-        const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://credit-bb-gn8u3.ondigitalocean.app";
         try {
             const response = await fetch(`${BACKEND_URL}/api/steganography/encode`, {
                 method: "POST",
