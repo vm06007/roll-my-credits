@@ -1,5 +1,5 @@
 import { useState } from "react";
-import OutsideClickHandler from "react-outside-click-handler";
+import ClickOutsideListener from "@patrissoljuns/react-click-outside";
 import cn from "classnames";
 import styles from "./Select.module.sass";
 import Icon from "@/components/Icon";
@@ -51,7 +51,7 @@ const Select = ({
                 className
             )}
         >
-            <OutsideClickHandler onOutsideClick={() => setVisible(false)}>
+            <ClickOutsideListener onClickOutside={() => setVisible(false)}>
                 <div className={styles.inner}>
                     <button
                         className={cn(styles.toggle, toggleClassName)}
@@ -88,7 +88,7 @@ const Select = ({
                         </div>
                     )}
                 </div>
-            </OutsideClickHandler>
+            </ClickOutsideListener>
         </div>
     );
 };
