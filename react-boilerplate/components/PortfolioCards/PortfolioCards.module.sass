@@ -1,0 +1,149 @@
+.container
+    max-width: 800px
+    margin: 0 auto
+    padding: 24px
+
+.header
+    display: flex
+    justify-content: space-between
+    align-items: center
+    margin-bottom: 24px
+
+.title
+    font-size: 24px
+    font-weight: 700
+    color: white
+    margin: 0
+
+.totalValue
+    font-size: 16px
+    color: rgba(255, 255, 255, 0.8)
+    font-weight: 600
+
+.cards
+    display: grid
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
+    gap: 20px
+
+.card
+    background: rgba(30, 35, 47, 0.8)
+    backdrop-filter: blur(20px)
+    border-radius: 16px
+    padding: 20px
+    border: 1px solid rgba(255, 255, 255, 0.1)
+    cursor: pointer
+    transition: all 0.3s ease
+    position: relative
+    overflow: hidden
+
+    &:hover
+        transform: translateY(-4px)
+        border-color: rgba(255, 255, 255, 0.2)
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3)
+
+    &:before
+        content: ''
+        position: absolute
+        top: 0
+        left: 0
+        right: 0
+        height: 2px
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)
+        opacity: 0
+        transition: opacity 0.3s ease
+
+    &:hover:before
+        opacity: 1
+
+.cardHeader
+    display: flex
+    justify-content: space-between
+    align-items: flex-start
+    margin-bottom: 16px
+
+.cardIcon
+    width: 48px
+    height: 48px
+    border-radius: 12px
+    display: flex
+    align-items: center
+    justify-content: center
+    color: white
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2)
+
+.cardActions
+    display: flex
+    gap: 8px
+
+.detailsButton
+    display: flex
+    align-items: center
+    gap: 4px
+    padding: 6px 12px
+    background: rgba(255, 255, 255, 0.1)
+    border: 1px solid rgba(255, 255, 255, 0.1)
+    border-radius: 8px
+    color: rgba(255, 255, 255, 0.7)
+    font-size: 12px
+    font-weight: 500
+    cursor: pointer
+    transition: all 0.2s ease
+
+    &:hover
+        background: rgba(255, 255, 255, 0.15)
+        color: white
+        border-color: rgba(255, 255, 255, 0.2)
+
+.cardContent
+    .protocolName
+        font-size: 18px
+        font-weight: 600
+        color: white
+        margin: 0 0 8px 0
+
+    .portfolioValue
+        font-size: 28px
+        font-weight: 700
+        color: white
+        margin: 0 0 16px 0
+
+.metrics
+    display: flex
+    flex-direction: column
+    gap: 8px
+
+.metric
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+.metricLabel
+    font-size: 14px
+    color: rgba(255, 255, 255, 0.6)
+    font-weight: 500
+
+.metricValue
+    font-size: 14px
+    color: white
+    font-weight: 600
+
+// Responsive design
+@media (max-width: 768px)
+    .container
+        padding: 16px
+
+    .cards
+        grid-template-columns: 1fr
+        gap: 16px
+
+    .header
+        flex-direction: column
+        align-items: flex-start
+        gap: 8px
+
+    .card
+        padding: 16px
+
+    .cardContent
+        .portfolioValue
+            font-size: 24px
