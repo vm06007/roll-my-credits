@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import cn from "classnames";
 import styles from "../DemoA.module.sass";
 import SettingsModal from "@/components/SettingsModal";
+import { encodeMessageIntoImage } from "@/utils/steganography";
 
 type EncodeKeyInPosterProps = {
     movies: string[];
@@ -160,73 +161,40 @@ const EncodeKeyInPoster = ({
         const phrase = inputMode === "free" ? seedPhrase : wordInputs.join(" ");
 
         setIsEncoding(true);
-        const formData = new FormData();
-
-        if (uploadMethod === "upload") {
-            formData.append("image", selectedFile!);
-        } else {
-            // For dropdown method, convert the preview image to a File object
-            if (originalImagePreview) {
-                try {
-                    const response = await fetch(originalImagePreview);
-                    const blob = await response.blob();
-                    const imageFile = new File([blob], "poster.jpg", { type: blob.type });
-                    formData.append("image", imageFile);
-                } catch (error) {
-                    showToast("Failed to load selected poster image", 'error');
+        try {
+            let imageBlob: Blob;
+            if (uploadMethod === "upload") {
+                imageBlob = selectedFile!;
+            } else {
+                if (!originalImagePreview) {
+                    showToast("No image selected", 'error');
                     setIsEncoding(false);
                     return;
                 }
-            } else {
-                showToast("No image selected", 'error');
-                setIsEncoding(false);
-                return;
+                const response = await fetch(originalImagePreview);
+                imageBlob = await response.blob();
             }
-        }
 
-        formData.append("message", phrase);
-
-        const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://credit-bb-gn8u3.ondigitalocean.app";
-        try {
-            const response = await fetch(`${BACKEND_URL}/api/steganography/encode`, {
-                method: "POST",
-                body: formData,
-            });
-
-            const result = await response.json();
-            if (result.success) {
-                setEncodedImage(`${BACKEND_URL}${result.url}`);
-                showToast("Message encoded successfully!", 'success');
-            } else {
-                showToast("Encoding failed. Please try again.", 'error');
-            }
-        } catch (error) {
-            console.error("Error:", error);
-            showToast("Error connecting to backend. Please check your connection.", 'error');
+            const dataUrl = await encodeMessageIntoImage(imageBlob, phrase);
+            setEncodedImage(dataUrl);
+            showToast("Message encoded successfully!", 'success');
+        } catch (error: any) {
+            console.error("Encode error:", error);
+            showToast(error?.message || "Encoding failed.", 'error');
         } finally {
             setIsEncoding(false);
         }
     };
 
     const handleDownloadEncoded = async () => {
-        if (encodedImage) {
-            try {
-                const response = await fetch(encodedImage);
-                const blob = await response.blob();
-                const url = window.URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = 'hidden-image.png';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                window.URL.revokeObjectURL(url);
-                showToast("Image downloaded successfully!", 'success');
-            } catch (error) {
-                console.error('Download failed:', error);
-                showToast("Download failed. Please try again.", 'error');
-            }
-        }
+        if (!encodedImage) return;
+        const link = document.createElement('a');
+        link.href = encodedImage;
+        link.download = 'hidden-image.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast("Image downloaded successfully!", 'success');
     };
 
     // Sample word lists for generation

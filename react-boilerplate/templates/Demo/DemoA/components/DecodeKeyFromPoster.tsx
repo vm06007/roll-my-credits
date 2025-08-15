@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import cn from "classnames";
 import styles from "../DemoA.module.sass";
+import { decodeMessageFromImage } from "@/utils/steganography";
 
 type ToastMessage = {
     id: string;
@@ -30,7 +31,7 @@ declare global {
     }
 }
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://credit-bb-gn8u3.ondigitalocean.app";
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "";
 
 const DecodeKeyFromPoster = () => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -81,40 +82,20 @@ const DecodeKeyFromPoster = () => {
         }
 
         setIsDecoding(true);
-        const formData = new FormData();
-        formData.append("image", selectedFile);
-
         try {
-            const response = await fetch(`${BACKEND_URL}/api/steganography/decode`, {
-                method: "POST",
-                body: formData,
+            const message = await decodeMessageFromImage(selectedFile);
+            setDecodedMessage(message);
+            showToast("Message revealed successfully!", 'success');
+
+            setRecoverySettings({
+                passwordProtected: false,
+                requireWorldID: false,
+                duressMode: false,
+                requirePayment: false,
             });
-
-            const result = await response.json();
-            if (result.success) {
-                setDecodedMessage(result.message);
-                showToast("Message revealed successfully!", 'success');
-
-                // Simulate recovery settings from the encoded data
-                setRecoverySettings({
-                    passwordProtected: result.settings?.passwordProtected || false,
-                    requireWorldID: result.settings?.requireWorldID || false,
-                    duressMode: result.settings?.duressMode || false,
-                    requirePayment: result.settings?.requirePayment || false,
-                });
-
-                // Check if password is required
-                if (result.settings?.passwordProtected && !passwordInput) {
-                    setShowPasswordInput(true);
-                    setDecodedMessage(null);
-                    showToast("This image is password protected. Please enter the password.", 'info');
-                }
-            } else {
-                showToast("Revealing failed. Please try again.", 'error');
-            }
-        } catch (error) {
-            console.error("Error:", error);
-            showToast("Error connecting to backend. Please check your connection.", 'error');
+        } catch (error: any) {
+            console.error("Decode error:", error);
+            showToast(error?.message || "Revealing failed. Please try again.", 'error');
         } finally {
             setIsDecoding(false);
         }
