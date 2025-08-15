@@ -129,7 +129,7 @@ const PortfolioCards = () => {
             <PortfolioModal
                 visible={isModalVisible}
                 onClose={handleCloseModal}
-                protocol={selectedProtocol}
+                protocol={selectedProtocol ?? undefined}
             />
         </div>
     );
