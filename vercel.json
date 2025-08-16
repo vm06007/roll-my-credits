@@ -1,0 +1,11 @@
+{
+    "version": 2,
+    "builds": [
+        { "src": "react-boilerplate/next.config.js", "use": "@vercel/next" }
+    ],
+    "routes": [
+        { "src": "/(.*)", "dest": "react-boilerplate/$1" }
+    ]
+}
+
+
